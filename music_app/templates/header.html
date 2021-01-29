@@ -1,0 +1,728 @@
+<!doctype html>
+<html lang="en">
+{% load static %}
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <!-- <link rel="stylesheet" href='{%static "main.css" %}'> -->
+    <!-- Flickity -->
+    <link rel="stylesheet" href="https://unpkg.com/flickity@2/dist/flickity.min.css">
+    <script src="https://unpkg.com/flickity@2/dist/flickity.pkgd.min.js"></script>
+
+    <!-- FontAwesome CDN -->
+    <link rel="stylesheet" href="https://pro.fontawesome.com/releases/v5.10.0/css/all.css"
+        integrity="sha384-AYmEC3Yw5cVb3ZcuHtOA93w35dYTsvhLPVnYs9eStHfGJvOvKxVfELGroGkvsg+p" crossorigin="anonymous" />
+
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.gstatic.com">
+    <link href="https://fonts.googleapis.com/css2?family=Baloo+Bhai+2:wght@500&family=Roboto&display=swap"
+        rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Heebo&family=Roboto&display=swap" rel="stylesheet">
+    <link rel="icon" href="{% static 'titleImage.png' %}" type="image/icon type">
+    <title>MusicBeats</title>
+
+    <!-- <title>{% block title %} {% endblock %}</title> -->
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            width: 100%;
+            height: 139px;
+            /* background-image: url('images/Header_grey.gif');    */
+            background-color: rgb(244, 244, 244);
+            overflow: hidden;
+        }
+
+        html {
+            scroll-behavior: smooth;
+        }
+
+        #navbar {
+            width: 100%;
+            padding: 10px;
+            display: grid;
+            grid-template-columns: 30% 40% 30%;
+            overflow: hidden;
+            /* border-bottom: 1px solid rgba(255, 255, 255, 0.5); */
+            box-shadow: 0 2px 4px 0 rgba(0, 0, 0, 0.05), 0 1px 10px 0 rgba(0, 0, 0, 0.05);
+        }
+
+        #nav-right {
+            display: flex;
+        }
+
+        /* #nav-center {
+            display: flex;
+        } */
+
+        #nav-left {
+            display: flex;
+        }
+
+        #navbar a {
+            text-decoration: none;
+            padding: 10px;
+            font-family: 'Baloo Bhai 2', cursive;
+            cursor: pointer;
+            font-size: 1.1rem;
+            color: rgb(68, 68, 68);
+        }
+
+        #navbar a:hover {
+            color: #2bc5b4;
+        }
+
+        #searchText {
+            width: 550px;
+            height: 2.3rem;
+            border-radius: 7px;
+            margin: 0px auto;
+            text-align: center;
+            color: rgb(130, 131, 131);
+            border: 1px solid rgb(211, 211, 211);
+            font-family: 'Baloo Bhai 2', cursive;
+        }
+
+        #navbar input:focus {
+            outline: none;
+        }
+
+        /* ----------------------------------------------------------Main Body CSS------------------------------------------------------------ */
+
+        #body-left {
+            width: 200px;
+            height: 700px;
+            background-repeat: repeat-y;
+            overflow: hidden;
+            position: absolute;
+            /* font-size: 16px; */
+            /* text-align: center; */
+            padding: 40px 0px 30px 70px;
+        }
+
+        #body-left a {
+            font-family: 'Baloo Bhai 2', cursive;
+            margin: 5px;
+            font-size: 1.1rem;
+            line-height: 2.1;
+            color: rgb(77, 75, 75);
+            text-decoration: none;
+            text-align: left;
+            cursor: pointer;
+        }
+
+        #body-left a:hover {
+            color: #2bc5b4;
+        }
+
+        #body-center {
+            height: 550px;
+            padding: 20px;
+            margin-left: 240px;
+            padding-right: 40px;
+            /* margin-right: 20px; */
+            /* padding-bottom: 30px; */
+            overflow: auto;
+        }
+
+        .song-card {
+            margin: 0px 10px;
+            height: 180px;
+            width: 145px;
+        }
+
+        .song-card img {
+            border-radius: 4%;
+            margin: auto;
+            height: 145px;
+            width: 145px;
+        }
+
+        .song-card p {
+            font-family: 'Baloo Bhai 2', cursive;
+            font-size: 0.9rem;
+            line-height: 2.1;
+            color: rgb(71, 70, 70);
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            text-align: center;
+        }
+
+        h2 {
+            margin-left: 35px;
+        }
+
+        .audio-decs {
+            display: grid;
+            grid-template-columns: 6% 14% 80%;
+            position: fixed;
+            bottom: 0px;
+            right: 0px;
+            width: 100%;
+            padding: 10px;
+            z-index: 1;
+            background-color: rgb(244, 244, 244);
+            box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.3), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+            /* border-top: 1px solid rgb(130, 131, 131); */
+        }
+
+        .audio-decs h4 {
+            font-family: 'Baloo Bhai 2', cursive;
+            line-height: 0.9;
+            font-size: 1.15rem;
+            color: rgb(31, 29, 29);
+        }
+
+        .audio-decs p {
+            font-family: 'Baloo Bhai 2', cursive;
+            font-size: 0.9rem;
+            color: rgb(156, 156, 156);
+        }
+
+        #audioPlayer {
+            width: 100%;
+        }
+
+        #audioPlayer:focus {
+            outline: none;
+        }
+
+
+
+
+
+
+
+
+
+        * {
+            margin: 0px;
+            padding: 0px;
+            font-family: Helvetica, Arial, sans-serif;
+        }
+
+        /* Full-width input fields */
+        input[type=text],
+        input[type=password],
+        input[type=email] {
+            width: 90%;
+            padding: 12px 20px;
+            margin: 8px 26px;
+            display: inline-block;
+            border: 1px solid #ccc;
+            box-sizing: border-box;
+            font-size: 16px;
+            border-radius: 5px;
+        }
+
+        /* Set a style for all buttons */
+        button {
+            background-color: #4CAF50;
+            color: white;
+            padding: 14px 20px;
+            margin: 8px 26px;
+            border: none;
+            cursor: pointer;
+            width: 90%;
+            font-size: 20px;
+        }
+
+        button:hover {
+            opacity: 0.8;
+        }
+
+        /* Center the image and position the close button */
+        .imgcontainer {
+            text-align: center;
+            margin: 24px 0 12px 0;
+            position: relative;
+        }
+
+        .avatar {
+            width: 400px;
+            height: 200px;
+            border-radius: 7%;
+        }
+
+        /* The Modal (background) */
+        .modal {
+            display: none;
+            position: fixed;
+            z-index: 1;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            overflow: auto;
+            background-color: rgba(0, 0, 0, 0.4);
+        }
+
+        /* Modal Content Box */
+        .modal-content {
+            background-color: #fefefe;
+            margin: 4% auto 15% auto;
+            border: 1px solid #888;
+            width: 40%;
+            padding-bottom: 30px;
+        }
+
+        /* The Close Button (x) */
+        .close {
+            position: absolute;
+            right: 25px;
+            top: 0;
+            color: #000;
+            font-size: 35px;
+            font-weight: bold;
+        }
+
+        .close:hover,
+        .close:focus {
+            color: red;
+            cursor: pointer;
+        }
+
+        /* Add Zoom Animation */
+        .animate {
+            animation: zoom 0.6s
+        }
+
+        @keyframes zoom {
+            from {
+                transform: scale(0)
+            }
+
+            to {
+                transform: scale(1)
+            }
+        }
+
+
+        .containera {
+            border-radius: 4%;
+            position: relative;
+            margin-top: 50px;
+            width: 145px;
+            height: 145px;
+        }
+
+        .overlaya {
+            position: absolute;
+            border-radius: 4%;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0);
+            transition: background 0.5s ease;
+        }
+
+        .containera:hover .overlaya {
+            display: block;
+            background: rgba(0, 0, 0, .65);
+        }
+
+        .containera img {
+            border-radius: 4%;
+            position: absolute;
+            width: 145px;
+            height: 145px;
+            left: 0;
+        }
+
+        .play-btn {
+            position: absolute;
+            width: 145px;
+            left: 0;
+            top: 52px;
+            text-align: center;
+            opacity: 0;
+            transition: opacity .35s ease;
+        }
+
+        .play-btn a {
+            color: white;
+            z-index: 1;
+        }
+
+        .containera:hover .play-btn {
+            opacity: 1;
+        }
+
+        .play-btn a:hover {
+            color: rgb(192, 190, 190);
+            /* transform: scale(1.05); */
+        }
+
+
+        .flickity-prev-next-button {
+            width: 40px;
+            height: 40px;
+            /* border-radius: 100%; */
+        }
+
+        /* icon color */
+        .flickity-button-icon {
+            fill: gray;
+        }
+
+        .flickity-button-icon:hover {
+            fill: black;
+        }
+
+        /* position outside */
+        .flickity-prev-next-button.previous {
+            left: -55px;
+        }
+
+        .flickity-prev-next-button.next {
+            right: -55px;
+        }
+
+
+        /* ---------------------------------Loader CSS------------------------- */
+        #loader {
+            border: 12px solid #f3f3f3;
+            border-radius: 50%;
+            border-top: 12px solid #444444;
+            width: 70px;
+            height: 70px;
+            animation: spin 0.5s linear infinite;
+        }
+
+        @keyframes spin {
+            100% {
+                transform: rotate(360deg);
+            }
+        }
+
+        .center {
+            position: absolute;
+            top: 0;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            margin: auto;
+        }
+
+
+
+
+
+
+        #searchBox {
+            background-color: white;
+            width: 900px;
+            height: 400px;
+            /* top: 47px; */
+            left: 330px;
+            /* margin: 10px auto; */
+            border-radius: 4%;
+            display: none;
+            position: fixed;
+            overflow: auto;
+            box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.3), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+            z-index: 3;
+            /* visibility: hidden; */
+        }
+
+        .song-card2 {
+            margin: 0px 10px;
+            height: 180px;
+            width: 145px;
+            display: none;
+        }
+
+        .song-card2 img {
+            border-radius: 4%;
+            margin: auto;
+            height: 145px;
+            width: 145px;
+        }
+
+        .song-card2 p {
+            font-family: 'Baloo Bhai 2', cursive;
+            font-size: 0.9rem;
+            line-height: 2.1;
+            color: rgb(71, 70, 70);
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            text-align: center;
+        }
+
+
+
+        footer {
+            margin-top: 0px;
+            background-color: rgb(244, 244, 244);
+            color: rgb(44, 43, 43);
+            /* padding: 100px;  */
+        }
+
+        #footer-top {
+            display: grid;
+            padding: 20px 0px 0px 0px;
+            grid-template-columns: 20% 20% 20% 20% 20%;
+        }
+
+        /* #footer-center{
+            display: grid;
+            grid-template-columns: 60% 40%;
+        } */
+        #footer-bottom {
+            /* background-color: peru; */
+            /* Abhi kuch socha nhi */
+            background-color: rgb(238, 235, 235);
+            text-align: center;
+            width: 100%;
+            padding: 5px;
+        }
+
+        footer h3 {
+            line-height: 1.6;
+            font-size: 0.8rem;
+            color: rgb(112, 112, 112);
+        }
+
+        footer a {
+            text-decoration: none;
+            line-height: 1.4;
+            font-size: 0.85rem;
+            cursor: pointer;
+            color: rgb(153, 153, 153);
+        }
+
+        #footer-center p {
+            text-align: justify;
+            line-height: 1.6;
+            font-size: 0.9rem;
+            color: rgb(146, 143, 143);
+        }
+
+        footer a:hover {
+            color: rgb(88, 87, 87);
+        }
+    </style>
+</head>
+
+<body>
+    {% load static %}
+    <!-- <div id="loader" class="center"></div> -->
+    <div id="navbar">
+        <div id="nav-left">
+            <h2 style="margin: auto 10px;">MusicBeats</h2>
+            <a style="margin: auto 10px;" href="/">Home</a>
+            <a style="margin: auto 10px;" href="">Categories</a>
+        </div>
+        <div id='nav-center'>
+            <form id="searchBar"> {% csrf_token %}
+                <input type="text" id="searchText" placeholder="Search - Currently Under Construction">
+            </form>
+        </div>
+        <div id="nav-right">
+            <a style="margin: auto;" href="">Music Languages</a>
+            <!-- <a href="">Login</a> -->
+            {% if user.is_authenticated %}
+            <h4 style="margin: auto;">Welcome, {{user.first_name}}</h4>
+            <a style="margin: auto;" href="/logout">Log Out</a>
+            {% else %}
+            <a style="margin: auto;" id="loginBtn"
+                onclick="document.getElementById('modal-wrapper-login').style.display='block'">
+                Log In</a>
+            <a style="margin: auto; text-align: left;"
+                onclick="document.getElementById('modal-wrapper-signup').style.display='block'">
+                SignUp</a>
+            {% endif %}
+        </div>
+    </div>
+
+    <!-- <div id="searchBox">
+        <div style="display: grid; grid-template-columns: 25% 25% 25% 25%;">
+            {% for i in allSongs %}
+            <div class="song-card2">
+                <div class="containera">
+                    <img src="{{i.image.url}}" alt="" />
+                    <div class="overlaya"></div>
+                    <div class="play-btn"><a href="song/{{i.song_id}}"> <i class="fas fa-play-circle fa-3x"></i>
+                        </a>
+                    </div>
+                </div>
+                <p>{{i.name}}</p>
+            </div>
+            {% endfor %}
+        </div>
+    </div> -->
+
+
+    <div id='modal-wrapper-login' class='modal'>
+
+        <form class='modal-content animate' action='/login' method="POST">{% csrf_token %}
+
+            <div class='imgcontainer'>
+                <span onclick="document.getElementById('modal-wrapper-login').style.display='none'"
+                    class='close'>&times;</span>
+                <img src='{% static "musicBeats.jpg" %}' alt='Avatar' class='avatar'>
+                <h1 style='text-align:center'>Login Form</h1>
+            </div>
+
+            <div class='container'>
+                <input type='text' placeholder='Enter Username' name='uname'>
+                <input type='password' placeholder='Enter Password' name='psw'>
+                <button type='submit'>Login</button>
+                <input type='checkbox' style='margin:26px 30px;'> Remember me
+                <a href='#' style='text-decoration:none; float:right; margin-right:34px; margin-top:26px;'>Forgot
+                    Password ?</a>
+            </div>
+
+        </form>
+
+    </div>
+
+
+    <div id='modal-wrapper-signup' class='modal'>
+
+        <form class='modal-content animate' action='/signup' method="POST">{% csrf_token %}
+
+            <div class='imgcontainer'>
+                <span onclick="document.getElementById('modal-wrapper-signup').style.display='none'"
+                    class='close'>&times;</span>
+                <img src='{% static "musicBeats.jpg" %}' alt='Avatar' class='avatar'>
+                <h1 style='text-align:center'>SignUp Form</h1>
+            </div>
+
+            <div class='container'>
+                <div style="display: grid; grid-template-columns: 50% 50%; padding-right: 30px;">
+                    <input type='text' placeholder='First Name' name='fname'>
+                    <input type='text' placeholder='Last Name' name='lname'>
+                </div>
+                <div style="display: grid; grid-template-columns: 50% 50%; padding-right: 30px;">
+                    <input type='email' placeholder='Email Address' name='email'>
+                    <input type='text' placeholder='Username' name='username'>
+                </div>
+                <input type='password' placeholder='Password' name='psw'>
+                <input type='password' placeholder='Confirm Password' name='c_psw'>
+                <button type='submit'>Login</button>
+            </div>
+
+        </form>
+
+    </div>
+
+    <!-- <section id="main-body"> -->
+
+    <div id="body-left">
+        <div>
+            <p
+                style="margin: 5px; font-size: 0.8rem; font-weight: 700; line-height: 2.5; color: rgb(138, 138, 138); text-align: left;">
+                LIBRARY</p>
+            <a href="/allSongs"><i class="fas fa-compact-disc"></i> All Songs</a><br>
+            {% if user.is_authenticated %}
+            <a href="/history"><i class="fas fa-history"></i> History</a><br>
+            {% else %}
+            <a id="historyBtn"><i class="fas fa-history"></i> History</a><br>
+            <script>
+                $('#historyBtn').click(function () {
+                    $('#loginBtn').click();
+                });
+            </script>
+            {% endif %}
+
+            
+
+            {% if user.is_authenticated %}
+            <a href="/likesong"><i class="fas fa-compact-disc"></i> LikedSongs</a><br>
+            {% else %}
+            <a id="likeBtn"><i class="fas fa-compact-disc"></i> LikedSongs</a><br>
+            <script>
+                $('#likeBtn').click(function () {
+                    $('#loginBtn').click();
+                });
+            </script>
+            {% endif %}
+            <a><i class="fas fa-compact-disc"></i> Artists</a><br>
+            <a><i class="fas fa-compact-disc"></i> Albums</a><br>
+            <a><i class="fas fa-book"></i> Playlist</a><br>
+
+        </div>
+    </div>
+
+    {% block body %}
+
+
+
+
+    {% endblock %}
+
+    <!-- javascript for login/logout function -->
+    <script>
+        // If user clicks anywhere outside of the modal, Modal will close
+        var modal = document.getElementById('modal-wrapper-login');
+        window.onclick = function (event) {
+            if (event.target == modal) {
+                modal.style.display = 'none';
+            }
+        }
+        var modal = document.getElementById('modal-wrapper-signup');
+        window.onclick = function (event) {
+            if (event.target == modal) {
+                modal.style.display = 'none';
+            }
+        }
+    </script>
+
+
+    <!-- -------------------------------------------------------Loader Tag---------------------------------------------------------- -->
+    <!-- <script>
+        document.onreadystatechange = function () {
+            if (document.readyState !== "complete") {
+                document.querySelector("body").style.visibility = "hidden";
+                document.querySelector("#loader").style.visibility = "visible";
+            } else {
+                document.querySelector("#loader").style.display = "none";
+                document.querySelector("body").style.visibility = "visible";
+            }
+        }; 
+    </script> -->
+
+
+    <!-- <script>
+        $('#searchBar').click(function () {
+            // alert('Bhosdiwaaala');
+            $('#searchBox').css('display', 'block');
+        });
+        if ($("#searchText").value == '') {
+            document.getElementsByClassName("song-card2").css('display', 'none')
+        }
+
+
+        document.getElementById("searchText").addEventListener("input", () => {
+
+            let inputVal = document.getElementById("searchText").value.toLowerCase();
+            let allcards = document.getElementsByClassName("song-card2");
+
+            Array.from(allcards).forEach(element => {
+                const cardContent = element.getElementsByTagName("p")[0].innerText.toLowerCase();
+                // const cardContent = element.getElementsByClassName("text")[0].innerText.toLowerCase();
+                if (cardContent.includes(inputVal)) {
+                    element.style.display = "block";
+                }
+                else {
+                    element.style.display = "none";
+                }
+            });
+
+        })
+    </script> -->
+
+    {% block javascript %}
+    {% endblock %}
+</body>
+
+</html>

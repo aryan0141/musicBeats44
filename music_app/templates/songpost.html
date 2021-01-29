@@ -1,0 +1,490 @@
+{%extends 'header.html'%}
+{% block body %}
+{% load static %}
+<style>
+    /* ----------------------------------------------------------Main Body CSS------------------------------------------------------------ */
+    .card {
+        padding: 30px 0px;
+        display: grid;
+        grid-template-columns: 25% 75%;
+    }
+
+    .card img {
+        box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.3), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+        border-radius: 4%;
+        margin: 0px auto;
+        height: 240px;
+        width: 85%;
+    }
+
+    h2 {
+        margin-left: 35px;
+    }
+
+    #sameMovieCard {
+        margin: 5px 150px 5px 20px;
+        display: grid;
+        grid-template-columns: 10% 90%;
+        padding: 10px 5px;
+        transition: 0.3s;
+    }
+
+    #sameMovieCard:hover {
+        box-shadow: 0 2px 2px 0 rgba(0, 0, 0, 0), 0 2px 2px 0 rgba(0, 0, 0, 0.1);
+        background-color: rgb(255, 255, 255);
+        transition: 0.3s;
+    }
+
+    .center {
+        position: absolute;
+        top: 0;
+        bottom: 0;
+        left: 0;
+        right: 0;
+        margin: auto;
+    }
+
+    #playlist {
+        list-style: none;
+    }
+
+    #playlist li a {
+        color: rgb(179, 177, 177);
+        text-decoration: none;
+        transition: 0.2s;
+    }
+
+    #playlist li a:hover {
+        color: #2bc5b4;
+        transition: 0.2s;
+    }
+
+    #playlist .current-song a {
+        color: #2bc5b4;
+    }
+
+    #likeButton {
+        margin: 10px 10px 10px 30px;
+        color: rgb(151, 151, 151);
+        background: none;
+        border: none;
+        cursor: pointer;
+        transition: 0.4s;
+    }
+
+    /* #likeButton:hover {
+        color: red;
+    } */
+
+    #likeButton:focus {
+        outline: none;
+        transition: 0.4s;
+    }
+
+
+    .container_songpost {
+        border-radius: 4%;
+        position: relative;
+        margin: 1px 0px 1px 45px;
+        width: 75%;
+        height: 50px;
+    }
+
+    .overlay_songpost {
+        position: absolute;
+        border-radius: 4%;
+        top: 0;
+        left: 0;
+        width: 70%;
+        height: 50px;
+        background: rgba(0, 0, 0, 0);
+        transition: background 0.5s ease;
+    }
+
+    #sameMovieCard:hover .overlay_songpost {
+        display: block;
+        background: rgba(0, 0, 0, .65);
+    }
+
+    .container_songpost img {
+        border-radius: 4%;
+        position: absolute;
+        width: 70%;
+        height: 50px;
+        left: 0;
+    }
+
+    .play-btn_songpost {
+        position: absolute;
+        width: 55px;
+        left: 0;
+        top: 10px;
+        text-align: center;
+        opacity: 0;
+        transition: opacity .2s ease;
+    }
+
+    /* .play-btn_songpost a {
+        color: rgb(179, 177, 177);
+        z-index: 1;
+    } */
+
+    #sameMovieCard:hover .play-btn_songpost {
+        opacity: 1;
+    }
+
+    /* .play-btn_songpost a:hover {
+        color: #2bc5b4;
+        transition: 0.2s;
+    } */
+</style>
+
+
+<body>
+    <div id="body-center">
+        <div id="playlist">
+            <div class="card">
+                <img src="{{song.image.url}}" id="A_{{song.song_id}}" />
+                <div style="padding: 0px 20px;">
+                    <h1 style="font-family: Lato,sans-serif; font-weight: 500; font-size: 2.25rem; line-height: 1.8; word-spacing: 1px; color: rgb(29, 29, 29);"
+                        id="B_{{song.song_id}}">{{song.name}}</h1>
+                    <p style="margin: 0px 10px 10px 0px; font-size: 1rem; font-family: 'Roboto', sans-serif; color: rgb(172, 169, 169);"
+                        id="C_{{song.song_id}}">{{song.movie}} by {{song.singer1}}</p>
+                    <p
+                        style="margin: 0px 10px 10px 0px; font-size: 1rem; font-family: 'Roboto', sans-serif; color: rgb(172, 169, 169);">
+                        Song | {{song.count}} Plays | {{song.language}} | {{song.tags}}</p>
+                    <p
+                        style="margin: 0px 10px 10px 0px; font-size: 1rem; font-family: 'Roboto', sans-serif; color: rgb(172, 169, 169);">
+                         &#169;{{song.year}} {{song.productionHouse}}</p>
+                    <div style="display: flex;">
+                        <li style="margin: auto 0px;" class="current-song"><a href="{{song.song.url}}"
+                                id="{{song.song_id}}"><i class="fas fa-play-circle fa-3x"></i></a></li>
+                        {% if user.is_authenticated %}
+                        <form style="margin: auto 0px;" id="my_form">{% csrf_token %}
+                            <input type="hidden" id="helo" value="{{song.song_id}}">
+                            <button type="submit" id="likeButton"><i class="fas fa-heart fa-2x"></i></button>
+                        </form>
+                        {% else %}
+                        <a id="likeButton"><i class="fas fa-heart fa-3x"></i></a>
+                        <script>
+                            $('#likeButton').click(function () {
+                                $('#loginBtn').click();
+                            });
+                        </script>
+                        {% endif %}
+                    </div>
+                </div>
+            </div>
+            {% if isAlbum %}
+            {% for i in sameMovieSongs %}
+            <div id="sameMovieCard">
+                <div class="container_songpost">
+                    <img src="{{i.image.url}}" id="A_{{i.song_id}}" />
+                    <div class="overlay_songpost"></div>
+                    <div class="play-btn_songpost">
+                        <li><a href="{{i.song.url}}" id="{{i.song_id}}"><i class="far fa-play-circle fa-2x"></i></a>
+                        </li>
+                    </div>
+                </div>
+                <div style="display: grid; grid-template-columns: 33% 33% 34%;">
+                    <h5 style="margin: auto 5px; color: rgb(75, 74, 74); font-size: 0.85rem;" id="B_{{i.song_id}}">
+                        {{i.name}}</h5>
+                    <p style="margin: auto 30px; color: rgb(143, 142, 142); font-size: 0.8rem;">{{i.singer1}}</p>
+                    <p style="margin: auto; color: rgb(143, 142, 142); font-size: 0.8rem;" id="C_{{i.song_id}}">
+                        {{i.movie}}</p>
+                </div>
+            </div>
+            {% endfor %}
+
+            {% else %}
+
+            <p style="margin: 0px 10px 10px 65px; font-size: 1rem; font-family: 'Roboto', sans-serif; color: rgb(43, 43, 43);"
+                        id="C_{{song.song_id}}">More songs from {{song.movie}}</p>
+            {% for i in sameMovieSongs %}
+
+            <div id="sameMovieCard">
+                <li style="margin: auto;"><a href="{{i.song.url}}" id="{{i.song_id}}"><i
+                            class="far fa-play-circle fa-2x"></i></a></li>
+                <img style="display: none;" src="{{i.image.url}}" id="A_{{i.song_id}}" />
+                <div style="display: grid; grid-template-columns: 33% 33% 34%;">
+                    <h5 style="margin: auto 5px; color: rgb(75, 74, 74); font-size: 0.85rem;" id="B_{{i.song_id}}">
+                        {{i.name}}</h5>
+                    <p style="margin: auto 30px; color: rgb(143, 142, 142); font-size: 0.8rem;">{{i.singer1}}</p>
+                    <p style="margin: auto; color: rgb(143, 142, 142); font-size: 0.8rem;" id="C_{{i.song_id}}">
+                        {{i.movie}}</p>
+                </div>
+            </div>
+            {% endfor %}
+            {% endif %}
+
+            <p style="margin: 30px 10px 10px 65px; font-size: 1rem; font-family: 'Roboto', sans-serif; color: rgb(43, 43, 43);"
+                        id="C_{{song.song_id}}">Songs suggested By Recommendation Engine</p>
+
+            {% for i in recommendedSongs %}
+
+            <div id="sameMovieCard">
+                <div class="container_songpost">
+                    <img src="{{i.image.url}}" id="A_{{i.song_id}}" />
+                    <div class="overlay_songpost"></div>
+                    <div class="play-btn_songpost">
+                        <li><a href="{{i.song.url}}" id="{{i.song_id}}"><i class="far fa-play-circle fa-2x"></i></a>
+                        </li>
+                    </div>
+                </div>
+                <div style="display: grid; grid-template-columns: 33% 33% 34%;">
+                    <h5 style="margin: auto 5px; color: rgb(75, 74, 74); font-size: 0.85rem;" id="B_{{i.song_id}}">
+                        {{i.name}}</h5>
+                    <p style="margin: auto 30px; color: rgb(143, 142, 142); font-size: 0.8rem;">{{i.singer1}}</p>
+                    <p style="margin: auto; color: rgb(143, 142, 142); font-size: 0.8rem;" id="C_{{i.song_id}}">
+                        {{i.movie}}</p>
+                </div>
+            </div>
+            {% endfor %}
+
+
+
+
+        </div>
+        <h2
+            style="margin-bottom: -30px; margin-left: 5px; margin-top: 100px; font-size: 1.35rem; font-family: sans-serif; color: rgb(65, 63, 63); ">
+            Recommended Artists</h2>
+        <div style="display: grid; grid-template-columns: 20% 20% 20% 20% 20%;">
+            {% for i in recommendedSingers %}
+            <div class="song-card">
+                <div class="containera">
+                    <img style="border-radius: 100%;" src="{{i.image.url}}" alt="" />
+                    <div style="border-radius: 100%;" class="overlaya"></div>
+                    <div class="play-btn"><a href="/album/{{i.singer_id}}"> <i class="fas fa-play-circle fa-3x"></i>
+                        </a>
+                    </div>
+                </div>
+                <div>
+                    <p>{{i.name}}</p>
+                </div>
+            </div>
+            {% endfor %}
+        </div>
+        <hr style="color: rgb(230, 223, 223); margin-top: 110px;">
+        <footer>
+            <div id="footer-top">
+                <div style="padding: 30px; margin: 0px auto;">
+                    <h3>LANGUAGES</h3>
+                    <a href="">Hindi Songs</a><br>
+                    <a href="">English Songs</a><br>
+                    <a href="">Punjabi Songs</a><br>
+                    <a href="">Rajasthani Songs</a><br>
+                    <a href="">Haryanvi Songs</a><br>
+                </div>
+                <div style="padding: 30px; margin: 0px auto;">
+                    <h3>DEVOTIONAL</h3>
+                    <a href="">Hanuman Bhakti</a><br>
+                    <a href="">Krishna Bhakti</a><br>
+                    <a href="">Sant Bhakti</a><br>
+                    <a href="">Sai Bhakti</a><br>
+                </div>
+                <div style="padding: 30px; margin: 0px auto;">
+                    <h3>OTHER ARTISTS</h3>
+                    <a href="">Juhi Chawla</a><br>
+                    <a href="">Dhanu Bhavshali</a><br>
+                    <a href="">Darshan Raval</a><br>
+                    <a href="">Benny Dayal</a><br>
+                </div>
+                <div style="padding: 30px; margin: 0px auto;">
+                    <h3>TOP ACTORS</h3>
+                    <a href="">Rajkumar Rao</a><br>
+                    <a href="">Pratik Gandhi</a><br>
+                    <a href="">Ayushman Khurana</a><br>
+                    <a href="">Sanjay Dutt</a><br>
+                    <a href="">Akshay Kumar</a><br>
+                </div>
+                <div style="padding: 30px; margin: 0px auto;">
+                    <h3>TOP ACTORS</h3>
+                    <a href="">Rajkumar Rao</a><br>
+                    <a href="">Pratik Gandhi</a><br>
+                    <a href="">Ayushman Khurana</a><br>
+                    <a href="">Sanjay Dutt</a><br>
+                    <a href="">Akshay Kumar</a><br>
+                </div>
+            </div>
+
+            <div id="footer-center">
+                <div style="padding: 35px 65px;">
+                    <h3>NOTE</h3>
+                    <p>This website is made only for fun and educational purpose. All the images of singers, albums or
+                        movies are taken from google.
+                        All the songs are collected from different websites.
+                        Our main motto is to learn and explore new techs, not to hurt anyone and also we are not
+                        monitizing this website and we not use it for commercial purposes. All the singers, music
+                        composers
+                        and actors are credited for their creations, we don't take credit of anyone of them.
+                        We are just using their songs and images to make our website more realistic.
+                    </p><br>
+                    <p>Special thanks to Fontawesome and Flickity to provide us awesome icons and sliders free of cost.
+                    </p>
+                    <br>
+                    <h3>ABOUT ME</h3>
+                    <p>My self Aryan Garg, currently I'm a sophomore student and pursuing my bachelor's degree in
+                        Electrical Engineering. I'm always
+                        facinated by new technologies and frameworks, I love to do web development and UI/UX designing.
+                        For any querry and suggestions for the website, feel free to mail me. I'm happy to hear from
+                        you.</p>
+                    <a href="mailto:garg2001aryan@gmail.com?subject = Feedback&body = Message">
+                        <i class="far fa-envelope fa-3x"></i>
+                    </a><br>
+                    <p>Thank you and have a nice day :)</p>
+                </div>
+            </div>
+            <div id="footer-bottom">
+                <h3>MUSIC BEATS | HAPPY MUSIC</h3>
+            </div>
+        </footer>
+    </div>
+
+    {% endblock %}
+
+    {% block javascript %}
+    <!-- -----------------------------------------------JS for Autoplay-------------------------------------------------------------------------- -->
+    <script>
+        $(document).ready(function () {
+            var currentSong = 0;
+            $("#audioPlayer")[0].src = $("#playlist li a")[0].href;
+            // console.log($("#playlist li a")[0].href);
+            // play($("#playlist li a")[0]);
+            $("#audioPlayer")[0].play();
+            $("#playlist li a").click(function (e) {
+                e.preventDefault();
+                audioBar(this);
+                $("#audioPlayer")[0].src = this;
+                $("#audioPlayer")[0].play();
+                $("#playlist li").removeClass("current-song");
+                currentSong = $(this).parent().index();
+                $(this).parent().addClass("current-song");
+            });
+
+            $("#audioPlayer")[0].addEventListener("ended", function () {
+                currentSong++;
+                if (currentSong == $("#playlist li a").length)
+                    currentSong = 0;
+                $("#playlist li").removeClass("current-song");
+                $("#playlist li:eq(" + currentSong + ")").addClass("current-song");
+                // $(".audioBar").addClass("hii");
+                $("#audioPlayer")[0].src = $("#playlist li a")[currentSong].href;
+                audioBar($("#playlist li a")[currentSong]);
+                $("#audioPlayer")[0].play();
+            });
+        });
+    </script>
+    <!-- ------------------------------------------------------------------------------------------------------------------------------------------ -->
+
+
+    <div id="audio_main" class="audio-decs">
+        <img id="audio-img" style="height: 53px; width: 64%; border-radius: 4%; margin: 3px 0px 3px 30px;"
+            src="{{song.image.url}}" alt="Image here">
+        <div style="margin: auto 6px;">
+            <h4 id="audio-song">{{song.name}}</h4>
+            <p id="audio-movie" style="color: rgb(151, 151, 151);">{{song.movie}}</p>
+        </div>
+        <div style="margin: auto 0px;">
+            <audio preload="none" controls id="audioPlayer">
+                <!-- <source type="audio/mp3" /> -->
+            </audio>
+        </div>
+    </div>
+
+
+
+    <!--------------------------------------------- javascript to play the songs on the bar -------------------------------------------->
+    <script type="text/javascript">
+        function audioBar(el) {
+            var main_id = el.id
+            var song_img = document.getElementById("A_" + main_id)
+            var song_name = document.getElementById("B_" + main_id)
+            var song_movie = document.getElementById("C_" + main_id)
+
+            var audio_img = document.getElementById("audio-img")
+            audio_img.src = song_img.src;
+
+            console.log(song_name.innerText);
+            console.log(song_movie.innerText);
+            document.getElementById("audio-song").innerText = song_name.innerText;
+            document.getElementById("audio-movie").innerText = song_movie.innerText;
+        }
+    </script>
+
+    <!-- Play/Pause the audio using spacebar -->
+    <script>
+        var play = true;
+
+        var myAudio = document.getElementById("audioPlayer");
+
+        function onKeyDown(event) {
+            switch (event.keyCode) {
+                case 32: //SpaceBar                    
+                    if (play) {
+                        myAudio.pause();
+                        play = false;
+                    } else {
+                        myAudio.play();
+                        play = true;
+                    }
+                    break;
+            }
+            return false;
+        }
+
+        window.addEventListener("keydown", onKeyDown, false);
+    </script>
+
+
+
+
+    <script>
+        var baby = 'my_form';
+        var boby = 'helo';
+        // var sub = $('#sub').click();
+        $('#' + baby).submit(function (e) {
+            e.preventDefault();
+            $.ajax({
+                type: 'POST',
+                url: '/likesong',
+                data: {
+                    music_id: $('#' + boby).val(),
+                    csrfmiddlewaretoken: $('input[name=csrfmiddlewaretoken]').val()
+                },
+                success: function () {
+                    console.log("Request Submitted");
+                }
+            });
+        });
+    </script>
+
+    {% if user.is_authenticated %}
+    <script>
+        // var isLiked = "{{isLiked}}";
+
+        var state = "{{isLiked}}";
+        console.log(state);
+
+        $(document).ready(function () {
+            if (state == "True") {
+                $("#likeButton").css("color", "red");
+                state = true;
+            } else {
+                $("#likeButton").css("color", "grey");
+                state = false
+            }
+            $("#likeButton").click(function () {
+                $("#likeButton").css("color", state ? "grey" : "red");
+                // if (state == true) {
+                //     alert("Removed from liked songs!")
+                // } else {
+                //     alert("Added to liked songs!")
+                // }
+                state = !state;
+            });
+        });
+    </script>
+    {% endif %}
+
+
+    {% endblock %}

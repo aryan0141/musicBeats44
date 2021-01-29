@@ -1,0 +1,612 @@
+<!DOCTYPE html>
+<html lang="en">
+{% load static %}
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            background-color: rgb(244, 244, 244);
+        }
+
+        html {
+            scroll-behavior: smooth;
+        }
+
+        #navbar {
+            display: flex;
+            overflow: hidden;
+            border-bottom: 1px solid rgb(130, 131, 131);
+        }
+
+        .nav-right {
+            margin-left: auto;
+            padding: 10px;
+            align-content: center;
+            text-align: center;
+        }
+
+        #navbar a {
+            text-decoration: none;
+            padding: 10px;
+            cursor: pointer;
+        }
+
+        #navbar input {
+            width: 550px;
+            height: 1.9rem;
+            border-radius: 9px;
+            text-align: center;
+            color: rgb(130, 131, 131);
+            border: 1px solid rgb(130, 131, 131);
+            font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
+        }
+
+        #nav-center {
+            margin: 10px auto;
+        }
+
+        #nav-center:hover {
+            border-color: blue
+        }
+
+        /* ----------------------------------------------------------Main Body CSS------------------------------------------------------------ */
+
+        #main-body {
+            display: grid;
+            grid-template-columns: 7% 78% 15%;
+        }
+
+        #body-left {
+            /* background-color: blue; */
+            width: 100%;
+            height: 100%;
+            border-right: 1px solid rgb(130, 131, 131);
+        }
+
+        #body-center {
+            /* background-color: greenyellow; */
+            width: 100%;
+            height: 100%;
+        }
+
+        #body-right {
+            /* background-color: pink; */
+            width: 100%;
+            height: 100%;
+            border-left: 1px solid rgb(130, 131, 131);
+        }
+
+        .bolly-posters {
+            display: grid;
+            grid-template-columns: 33% 33% 34%;
+            padding: 10px 0px;
+        }
+
+        .image {
+            /* margin: 7px; */
+            border-radius: 9%;
+            margin: 0px auto;
+            height: 201px;
+        }
+
+        .songs {
+            display: grid;
+            grid-template-columns: 14% 14% 14% 14% 14% 14% 16%;
+            padding: 10px 10px;
+        }
+
+        .song-card {
+            padding: 10px;
+        }
+
+        .song-card img {
+            border-radius: 7%;
+            margin: 0px auto;
+            height: 125px;
+            width: 100%;
+        }
+
+        .song-card h4 {
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            text-align: center;
+            font-size: 0.8rem;
+        }
+
+        .song-card p {
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            text-align: center;
+            color: rgb(151, 151, 151);
+            font-size: 0.8rem;
+        }
+
+        h2 {
+            margin-left: 35px;
+        }
+
+        .audio-decs {
+            display: grid;
+            grid-template-columns: 6% 14% 80%;
+            position: fixed;
+            bottom: 0px;
+            right: 0px;
+            width: 100%;
+            z-index: 1;
+            background-color: rgb(244, 244, 244);
+            border-top: 1px solid rgb(130, 131, 131);
+        }
+
+        #audio {
+            width: 100%;
+        }
+
+
+
+
+
+
+
+
+
+        * {
+            margin: 0px;
+            padding: 0px;
+            font-family: Helvetica, Arial, sans-serif;
+        }
+
+        /* Full-width input fields */
+        input[type=text],
+        input[type=password],
+        input[type=email] {
+            width: 90%;
+            padding: 12px 20px;
+            margin: 8px 26px;
+            display: inline-block;
+            border: 1px solid #ccc;
+            box-sizing: border-box;
+            font-size: 16px;
+            border-radius: 5px;
+        }
+
+        /* Set a style for all buttons */
+        button {
+            background-color: #4CAF50;
+            color: white;
+            padding: 14px 20px;
+            margin: 8px 26px;
+            border: none;
+            cursor: pointer;
+            width: 90%;
+            font-size: 20px;
+        }
+
+        button:hover {
+            opacity: 0.8;
+        }
+
+        /* Center the image and position the close button */
+        .imgcontainer {
+            text-align: center;
+            margin: 24px 0 12px 0;
+            position: relative;
+        }
+
+        .avatar {
+            width: 400px;
+            height: 200px;
+            border-radius: 7%;
+        }
+
+        /* The Modal (background) */
+        .modal {
+            display: none;
+            position: fixed;
+            z-index: 1;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            overflow: auto;
+            background-color: rgba(0, 0, 0, 0.4);
+        }
+
+        /* Modal Content Box */
+        .modal-content {
+            background-color: #fefefe;
+            margin: 4% auto 15% auto;
+            border: 1px solid #888;
+            width: 40%;
+            padding-bottom: 30px;
+        }
+
+        /* The Close Button (x) */
+        .close {
+            position: absolute;
+            right: 25px;
+            top: 0;
+            color: #000;
+            font-size: 35px;
+            font-weight: bold;
+        }
+
+        .close:hover,
+        .close:focus {
+            color: red;
+            cursor: pointer;
+        }
+
+        /* Add Zoom Animation */
+        .animate {
+            animation: zoom 0.6s
+        }
+
+        @keyframes zoom {
+            from {
+                transform: scale(0)
+            }
+
+            to {
+                transform: scale(1)
+            }
+        }
+
+        .play-btn{
+            align-content: center;
+            justify-content: center;
+            margin:0px auto;
+            padding: 3px 15px;
+            border: 1 px solid rgb(130, 131, 131);
+            color: rgb(130, 131, 131);
+            background: none;
+        }
+    </style>
+    <title>HitTunes Hindi!</title>
+
+</head>
+
+<body>
+    <section id="navbar">
+        <h2>SunTunes</h2>
+        <a href="">Home</a>
+        <a href="">Categories</a>
+        <div id='nav-center'>
+            <form action="">
+                <input type="text" placeholder="Search">
+            </form>
+        </div>
+        <div style="display: flex;" class="nav-right">
+            <a href="">Music Languages</a>
+            <!-- <a href="">Login</a> -->
+            {% if user.is_authenticated %}
+            <h4>Welcome, {{user.first_name}}</h4>
+            <a href="logout">Log Out</a>
+            {% else %}
+            <a onclick="document.getElementById('modal-wrapper-login').style.display='block'">
+                Log In</a>
+            <a onclick="document.getElementById('modal-wrapper-signup').style.display='block'">
+                SignUp</a>
+            {% endif %}
+        </div>
+    </section>
+
+
+
+
+
+    <div id='modal-wrapper-login' class='modal'>
+
+        <form class='modal-content animate' action='login' method="POST">{% csrf_token %}
+
+            <div class='imgcontainer'>
+                <span onclick="document.getElementById('modal-wrapper-login').style.display='none'"
+                    class='close'>&times;</span>
+                <img src='{% static "saavan.png" %}' alt='Avatar' class='avatar'>
+                <h1 style='text-align:center'>Login Form</h1>
+            </div>
+
+            <div class='container'>
+                <input type='text' placeholder='Enter Username' name='uname'>
+                <input type='password' placeholder='Enter Password' name='psw'>
+                <button type='submit'>Login</button>
+                <input type='checkbox' style='margin:26px 30px;'> Remember me
+                <a href='#' style='text-decoration:none; float:right; margin-right:34px; margin-top:26px;'>Forgot
+                    Password ?</a>
+            </div>
+
+        </form>
+
+    </div>
+
+
+    <div id='modal-wrapper-signup' class='modal'>
+
+        <form class='modal-content animate' action='signup' method="POST">{% csrf_token %}
+
+            <div class='imgcontainer'>
+                <span onclick="document.getElementById('modal-wrapper-signup').style.display='none'"
+                    class='close'>&times;</span>
+                <img src='{% static "saavan.png" %}' alt='Avatar' class='avatar'>
+                <h1 style='text-align:center'>SignUp Form</h1>
+            </div>
+
+            <div class='container'>
+                <div style="display: grid; grid-template-columns: 50% 50%; padding-right: 30px;">
+                    <input type='text' placeholder='First Name' name='fname'>
+                    <input type='text' placeholder='Last Name' name='lname'>
+                </div>
+                <div style="display: grid; grid-template-columns: 50% 50%; padding-right: 30px;">
+                    <input type='email' placeholder='Email Address' name='email'>
+                    <input type='text' placeholder='Username' name='username'>
+                </div>
+                <input type='password' placeholder='Password' name='psw'>
+                <input type='password' placeholder='Confirm Password' name='c_psw'>
+                <button type='submit'>Login</button>
+            </div>
+
+        </form>
+
+    </div>
+
+
+
+
+
+
+    <section id="main-body">
+
+        <div id="body-left">
+            <p>Albums</p>
+            <p>Playlist</p>
+            <p>History</p>
+            <p>Upgrade</p>
+            <p>Albums</p>
+            <p>Artists</p>
+        </div>
+
+        <div id="body-center">
+            <div class="bolly-posters">
+                <img class="image" src="{% static 'saho.jpeg'%}" alt="Poster image">
+                <img class="image" src="{% static 'urvashi.jpg'%}" alt="Poster image">
+                <img class="image" src="{% static 'soty.jpg'%}" alt="Poster image">
+            </div>
+            <h2>Trending-</h2>
+            <div class="songs">
+                {% for i in song %}
+                <!-- <form id="A_{{i.song_id}}">{% csrf_token %} -->
+                    <div id="B_{{i.song_id}}" class="song-card">
+                        <img src="{{i.image.url}}" id="{{i.song.url}}" alt="" />
+                        <h4 id="{{i.name}}">{{i.name}}</h4>
+                        <p id="{{i.movie}}">{{i.movie}}</p>
+                        <a class="play-btn" id="{{i.song_id}}" href="songs/{{i.song_id}}">Listen Now</a>
+                        <!-- <a class="play-btn" id="{{i.song_id}}" onclick="play(this)">Listen Now</a> -->
+                    </div>
+                    <!-- <input type="hidden" id="C_{{i.song_id}}" value="{{i.song_id}}"> -->
+                    <!-- <input class="play-btn" id="{{i.song_id}}" onclick="mainFunc(this)" value="Play" type="submit"> -->
+                <!-- </form> -->
+                {% endfor %}
+                <!-- {% for i in song %}
+                <div id="{{i.song_id}}" onClick="someFunc(this)" class="song-card">
+                    <form id="A_{{i.song_id}}">{% csrf_token %}
+                        <img src="{{i.image.url}}" id="{{i.song.url}}" alt="" />
+                        <input type="hidden" id="B_{{i.song_id}}" value="{{i.song_id}}">
+                        <h4 id="{{i.name}}">{{i.name}}</h4>
+                        <p id="{{i.movie}}">{{i.movie}}</p>
+                        <input id="C_{{i.song_id}}" type="submit">
+                    </form>
+                </div>
+                {% endfor %} -->
+
+                <div id="audio_main" class="audio-decs">
+                    <img id="audio-img" style="height: 64px; width: 80%; border-radius: 7%; margin: 3px 0px 3px 20px;"
+                        src="{% static 'pallo-latke.jpg' %}" alt="Image here">
+                    <div style="margin: auto 6px;">
+                        <h4 id="audio-song">Pallo Latke</h4>
+                        <p id="audio-movie" style="color: rgb(151, 151, 151);">Shadi Me Zarur Aana</p>
+                    </div>
+                    <div style="margin: auto 0px;">
+                        <audio preload="auto" controls id="audio">
+                            <!-- <source type="audio/mp3" /> -->
+                        </audio>
+                    </div>
+                </div>
+
+            </div>
+            <h2>Your Mixes-</h2>
+            <div class="songs">
+                <div class="song-card">
+                    <img src="{% static 'pallo-latke.jpg'%}" alt="">
+                    <h3>Pallo Latke</h3>
+                    <!-- <p>Shadi Me Zarur Aana</p> -->
+                </div>
+                <div class="song-card">
+                    <img src="{% static 'raazi.jpg'%}" alt="">
+                    <h3>Ae Watan</h3>
+                    <p>Raazi</p>
+                </div>
+                <div class="song-card">
+                    <img src="{% static 'urvashi.jpg'%}" alt="">
+                    <h3>Sanam Re</h3>
+                    <p>Sanam Re</p>
+                </div>
+                <div class="song-card">
+                    <img src="{% static 'blue-eyes.jpg'%}" alt="">
+                    <h3>Blue Eyes</h3>
+                    <p>Yo Yo Honey Singh</p>
+                </div>
+                <div class="song-card">
+                    <img src="{% static 'pallo-latke.jpg'%}" alt="">
+                    <h3>Pallo Latke</h3>
+                    <p>Shadi Me Zarur Aana</p>
+                </div>
+                <div class="song-card">
+                    <img src="{% static 'pallo-latke.jpg'%}" alt="">
+                    <h3>Pallo Latke</h3>
+                    <p>Shadi Me Zarur Aana</p>
+                </div>
+            </div>
+            <form id="my_form">{% csrf_token %}
+                <input type="text" id="helo">
+                <input type="submit" id="sub">
+            </form>
+            <h2>Artists</h2>
+            <div class="songs">
+                <div class="song-card">
+                    <img src="{% static 'pallo-latke.jpg'%}" alt="">
+                    <h3>Pallo Latke</h3>
+                    <p>Shadi Me Zarur Aana</p>
+                </div>
+                <div class="song-card">
+                    <img src="{% static 'raazi.jpg'%}" alt="">
+                    <h3>Ae Watan</h3>
+                    <p>Raazi</p>
+                </div>
+                <div class="song-card">
+                    <img src="{% static 'urvashi.jpg'%}" alt="">
+                    <h3>Sanam Re</h3>
+                    <p>Sanam Re</p>
+                </div>
+                <div class="song-card">
+                    <img src="{% static 'blue-eyes.jpg'%}" alt="">
+                    <h3>Blue Eyes</h3>
+                    <p>Yo Yo Honey Singh</p>
+                </div>
+                <div class="song-card">
+                    <img src="{% static 'pallo-latke.jpg'%}" alt="">
+                    <h3>Pallo Latke</h3>
+                    <p>Shadi Me Zarur Aana</p>
+                </div>
+                <div class="song-card">
+                    <img src="{% static 'pallo-latke.jpg'%}" alt="">
+                    <h3>Pallo Latke</h3>
+                    <p>Shadi Me Zarur Aana</p>
+                </div>
+            </div>
+        </div>
+        <div id="body-right">
+            <h4>Auto Play Likes This-</h4>
+        </div>
+
+    </section>
+
+
+
+    <!-- <script>
+        function someFunc(el) {
+            $('#A_' + el.id).submit(function (e) {
+                e.preventDefault();
+                $.ajax({
+                    type: 'POST',
+                    url: 'history',
+                    data: {
+                        music_id: $('#B_' + el.id).val(),
+                        csrfmiddlewaretoken: $('input[name=csrfmiddlewaretoken]').val()
+                    },
+                    success: function () {
+                        // alert("Request Submitted");
+                        play(el);
+                    }
+                });
+            });
+        }
+    </script> -->
+
+    <script type="text/javascript">
+        function play(el) {
+            var ids = [];
+            var children = document.getElementById('B_' + el.id).children; //get container element children.
+            for (var i = 0, len = children.length; i < len; i++) {
+                children[i].className = 'new-class'; //change child class name.
+                ids.push(children[i].id); //get child id.
+            }
+
+            var img_song = document.getElementById(ids[0])
+
+            var audio_img = document.getElementById("audio-img")
+            audio_img.src = img_song.src;
+
+            document.getElementById("audio-song").innerText = ids[1];
+            document.getElementById("audio-movie").innerText = ids[2];
+
+            var audio = document.getElementById("audio");
+            audio.src = img_song.id;
+            audio.play();
+        }
+    </script>
+
+    <script>
+        function someFunc(el) {
+            $(document).on('submit', '#A_' + el.id, function (e) {
+                e.preventDefault();
+                e.stopImmediatePropagation();
+                $.ajax({
+                    type: 'POST',
+                    url: 'history',
+                    data: {
+                        music_id: $('#C_' + el.id).val(),
+                        csrfmiddlewaretoken: $('input[name=csrfmiddlewaretoken]').val()
+                    },
+                    success: function () {
+                        // alert(el.id)
+                        console.log("Success");
+                    }
+                });
+            });
+        }
+    </script>
+
+    <script>
+        var baby = 'my_form';
+        var boby = 'helo';
+        // var sub = $('#sub').click();
+        $('#' + baby).submit(function (e) {
+            e.preventDefault();
+            $.ajax({
+                type: 'POST',
+                url: 'history',
+                data: {
+                    music_id: $('#' + boby).val(),
+                    csrfmiddlewaretoken: $('input[name=csrfmiddlewaretoken]').val()
+                },
+                success: function () {
+                    alert("Request Submitted");
+                }
+            });
+        });
+    </script>
+    <script>
+        // If user clicks anywhere outside of the modal, Modal will close
+
+        var modal = document.getElementById('modal-wrapper-login');
+        window.onclick = function (event) {
+            if (event.target == modal) {
+                modal.style.display = 'none';
+            }
+        }
+        var modal = document.getElementById('modal-wrapper-signup');
+        window.onclick = function (event) {
+            if (event.target == modal) {
+                modal.style.display = 'none';
+            }
+        }
+    </script>
+
+<script>
+    // function mainFunc(el){
+    //     someFunc(el);
+    //     play(el);
+    // }
+</script>
+</body>
+
+</html>

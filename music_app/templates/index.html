@@ -1,0 +1,208 @@
+{%extends 'header.html'%}
+
+{% load static %}
+{% block body %}
+<div id="body-center">
+
+    {% for message in messages %}
+    <div id="alert" style="color: red; z-index: 2; position: absolute; left: 650px; font-weight: bold; font-size: 2.1rem;" class="message" role="alert">
+        {{message}}
+    </div>
+    {% endfor %}
+
+    <script>
+
+        $(document).ready(function () {
+            setTimeout(function () {
+                $('.message').fadeOut('slow');
+            }, 2000);
+        });
+    </script>
+    {% if user.is_authenticated %}
+    <h2
+        style="margin-bottom: -30px; margin-left: 5px; margin-top: 20px; font-size: 1.35rem; font-family: sans-serif; color: rgb(65, 63, 63); ">
+        Recently Played</h2>
+    <div class="main-carousel" data-flickity='{"groupCells":4, "cellAlign": "left" , "contain": true}'>
+        {% for i in recentSongs reversed %}
+        <div class="carousel-cell">
+            <div class="song-card">
+                <div class="containera">
+                    <img src="{{i.image.url}}" alt="" />
+                    <div class="overlaya"></div>
+                    <div class="play-btn"><a href="song/{{i.song_id}}"> <i class="far fa-play-circle fa-3x"></i>
+                        </a>
+                    </div>
+                </div>
+                <!-- <h4>{{i.name}}</h4> -->
+                <p>{{i.name}}</p>
+            </div>
+        </div>
+        {% endfor %}
+    </div>
+    {% endif %}
+
+
+
+    <h2
+        style="margin-bottom: -30px; margin-left: 5px; margin-top: 35px; font-size: 1.35rem; font-family: sans-serif; color: rgb(65, 63, 63); ">
+        Trending Now</h2>
+    <div class="main-carousel" data-flickity='{"groupCells":4 , "contain": true}'>
+        {% for i in trendingSongs %}
+        <div class="carousel-cell">
+            <div class="song-card">
+                <div class="containera">
+                    <img src="{{i.image.url}}" alt="" />
+                    <div class="overlaya"></div>
+                    <div class="play-btn"><a href="song/{{i.song_id}}"> <i class="far fa-play-circle fa-3x"></i>
+                        </a>
+                    </div>
+                </div>
+                <div>
+                    <p>{{i.name}}</p>
+                </div>
+                <!-- <p>{{i.movie}}</p> -->
+            </div>
+        </div>
+        {% endfor %}
+    </div>
+
+    <h2
+        style="margin-bottom: -30px; margin-left: 5px; margin-top: 40px; font-size: 1.35rem; font-family: sans-serif; color: rgb(65, 63, 63); ">
+        New Realeases</h2>
+
+
+    <div class="main-carousel" data-flickity='{"groupCells":4 , "contain": true}'>
+        {% for i in newRealeases %}
+        <div class="carousel-cell">
+            <div class="song-card">
+                <div class="containera">
+                    <img src="{{i.image.url}}" alt="" />
+                    <div class="overlaya"></div>
+                    <div class="play-btn"><a href="song/{{i.song_id}}"> <i class="far fa-play-circle fa-3x"></i>
+                        </a>
+                    </div>
+                </div>
+                <div>
+                    <p>{{i.name}}</p>
+                </div>
+                <!-- <p>{{i.movie}}</p> -->
+            </div>
+        </div>
+        {% endfor %}
+    </div>
+
+
+
+    <h2
+        style="margin-bottom: -30px; margin-left: 5px; margin-top: 100px; font-size: 1.35rem; font-family: sans-serif; color: rgb(65, 63, 63); ">
+        Top Artists</h2>
+    <div class="main-carousel" data-flickity='{"groupCells":4 , "contain": true}'>
+        {% for i in singers %}
+        <div class="carousel-cell">
+            <div class="song-card">
+                <div class="containera">
+                    <img style="border-radius: 100%;" src="{{i.image.url}}" alt="" />
+                    <div style="border-radius: 100%;" class="overlaya"></div>
+                    <div class="play-btn"><a href="album/{{i.singer_id}}"> <i class="far fa-play-circle fa-3x"></i>
+                        </a>
+                    </div>
+                </div>
+                <div>
+                    <p>{{i.name}}</p>
+                </div>
+            </div>
+        </div>
+        {% endfor %}
+    </div>
+
+    <hr style="color: rgb(230, 223, 223); margin-top: 110px;">
+    <footer>
+        <div id="footer-top">
+            <div style="padding: 30px; margin: 0px auto;">
+                <h3>LANGUAGES</h3>
+                <a href="">Hindi Songs</a><br>
+                <a href="">English Songs</a><br>
+                <a href="">Punjabi Songs</a><br>
+                <a href="">Rajasthani Songs</a><br>
+                <a href="">Haryanvi Songs</a><br>
+            </div>
+            <div style="padding: 30px; margin: 0px auto;">
+                <h3>DEVOTIONAL</h3>
+                <a href="">Hanuman Bhakti</a><br>
+                <a href="">Krishna Bhakti</a><br>
+                <a href="">Sant Bhakti</a><br>
+                <a href="">Sai Bhakti</a><br>
+            </div>
+            <div style="padding: 30px; margin: 0px auto;">
+                <h3>OTHER ARTISTS</h3>
+                <a href="">Juhi Chawla</a><br>
+                <a href="">Dhanu Bhavshali</a><br>
+                <a href="">Darshan Raval</a><br>
+                <a href="">Benny Dayal</a><br>
+            </div>
+            <div style="padding: 30px; margin: 0px auto;">
+                <h3>TOP ACTORS</h3>
+                <a href="">Rajkumar Rao</a><br>
+                <a href="">Pratik Gandhi</a><br>
+                <a href="">Ayushman Khurana</a><br>
+                <a href="">Sanjay Dutt</a><br>
+                <a href="">Akshay Kumar</a><br>
+            </div>
+            <div style="padding: 30px; margin: 0px auto;">
+                <h3>TOP ACTORS</h3>
+                <a href="">Rajkumar Rao</a><br>
+                <a href="">Pratik Gandhi</a><br>
+                <a href="">Ayushman Khurana</a><br>
+                <a href="">Sanjay Dutt</a><br>
+                <a href="">Akshay Kumar</a><br>
+            </div>
+        </div>
+
+        <div id="footer-center">
+            <div style="padding: 35px 65px;">
+                <h3>NOTE</h3>
+                <p>This website is made only for fun and educational purpose. All the images of singers, albums or
+                    movies are taken from google.
+                    All the songs are collected from different websites.
+                    Our main motto is to learn and explore new techs, not to hurt anyone and also we are not monitizing
+                    this website and we not use it for commercial purposes. All the singers, music composers
+                    and actors are credited for their creations, we don't take credit of anyone of them.
+                    We are just using their songs and images to make our website more realistic.
+                </p><br>
+                <p>Special thanks to Fontawesome and Flickity to provide us awesome icons and sliders free of cost.</p>
+                <br>
+                <h3>ABOUT ME</h3>
+                <p>My self Aryan Garg, currently I'm a sophomore student and pursuing my bachelor's degree in Electrical
+                    Engineering. I'm always
+                    facinated by new technologies and frameworks, I love to do web development and UI/UX designing.
+                    For any querry and suggestions for the website, feel free to mail me. I'm happy to hear from you.
+                </p>
+                <a href="mailto:garg2001aryan@gmail.com?subject = Feedback&body = Message">
+                    <i class="far fa-envelope fa-3x"></i>
+                </a><br>
+                <p>Thank you and have a nice day :)</p>
+            </div>
+        </div>
+        <div id="footer-bottom">
+            <h3>MUSIC BEATS | HAPPY MUSIC</h3>
+        </div>
+    </footer>
+
+
+</div>
+
+<div id="audio_main" class="audio-decs">
+    <img id="audio-img" style="height: 53px; width: 64%; border-radius: 4%; margin: 3px 0px 3px 30px;"
+        src="{% static 'staticDisk.jpg' %}" alt="Image here">
+    <div style="margin: auto 6px;">
+        <h4 id="audio-song"></h4>
+        <p id="audio-movie"></p>
+    </div>
+    <div style="margin: auto 0px;">
+        <audio preload="auto" controls id="audioPlayer">
+            <!-- <source type="audio/mp3" /> -->
+        </audio>
+    </div>
+</div>
+
+{% endblock %}
