@@ -24,7 +24,7 @@ BASE_DIR = Path(__file__).resolve(strict=True).parent.parent
 SECRET_KEY = 'i5k=wt-bz0^$=vz&unfle6hqxr7^%^=qi_dw&^2^om#retym&w'
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = False
+DEBUG = True
 
 # ALLOWED_HOSTS = ['hittunes.herokuapp.com', 'localhost']
 ALLOWED_HOSTS = ['musicbeats44.herokuapp.com', 'localhost']
