@@ -197,6 +197,27 @@ h2 {
     text-align: center;
 }
 
+#delete-btn {
+    text-decoration: none;
+    text-align: center;
+    font-family: 'Baloo Bhai 2', cursive;
+    border: none;
+    padding: 6px 25px;
+    margin: 30px 0px 0px 0px;
+    font-size: 0.9rem;
+    outline: none;
+    color: white;
+    background-color: #d11616;
+    cursor: pointer;
+    border-radius: 8px;
+    transition: 0.3s;
+}
+
+#delete-btn:hover {
+    background-color: #f51313;
+    transition: 0.3s;
+}
+
 
 @media only screen and (max-width: 600px) {
     #body-center {

@@ -157,6 +157,15 @@ def myPlaylist(request, id):
                 return render(request, "myPlaylist.html", {'playlistInfo':currPlaylist, 'playlistSongs':playlistSongs,
                                                             'myPlaylists':myPlaylists, 'recommendedSingers':recommendedSingers, 'randomImagePath':randomImagePath})
 
+def deletePlaylist(request):
+    if request.method=="POST":
+        playlist_id = request.POST["playlist_id"]
+        # print(playlist_id)
+        Playlist.objects.filter(playlist_id=playlist_id).delete()
+        messages.info(request,"Playlist Deleted")
+        print("Playlist Deleted")
+    return redirect("/")
+
 def addSongToPlaylist(request):
     user = request.user
     if(user.is_authenticated):

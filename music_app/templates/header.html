@@ -6,7 +6,8 @@
 
 <head>
 
-
+    <link rel="icon" href="{% static 'loginLogo.png' %}" type="image/icon type">
+    <title>MusicBeats</title>
 
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -27,8 +28,7 @@
     <link href="https://fonts.googleapis.com/css2?family=Heebo&family=Roboto&display=swap" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css2?family=Lato&display=swap" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css2?family=Lato&display=swap" rel="stylesheet">
-    <link rel="icon" href="{% static 'loginLogo.png' %}" type="image/icon type">
-    <title>MusicBeats</title>
+    
 
     <link rel="stylesheet" href="{% static 'hamburgerNavbar.css' %}">
     <link rel="stylesheet" href="{% static 'navbar.css' %}">
@@ -226,7 +226,7 @@
 
     <div id='modal-wrapper-playlist' class='modal'>
         <form class='modal-content animate' action='/createPlaylist' method="POST">{% csrf_token %}
-            <h1 style="font-family: sans-serif; text-align: center; margin: 30px 10px 0px 10px;">Create Playlist</h1>
+            <h1 style="font-family: sans-serif; text-align: center; margin: 30px 10px 0px 10px; font-family: 'Lato', sans-serif;">Create Playlist</h1>
             <div class='container'>
                 <input type='text' placeholder='Your New Playlist Name' name='playlist_name' required><br>
                 <input type='submit' value="Create Playlist">
@@ -258,16 +258,16 @@
 
 
             {% if user.is_authenticated %}
-            <a class="left-panel-btn" href="/likesong"><i class="fas fa-compact-disc"></i> LikedSongs</a><br>
+            <a class="left-panel-btn" href="/likesong"><i class="fas fa-heart"></i> LikedSongs</a><br>
             {% else %}
-            <a class="left-panel-btn" id="likeBtn"><i class="fas fa-compact-disc"></i> LikedSongs</a><br>
+            <a class="left-panel-btn" id="likeBtn"><i class="fas fa-heart"></i> LikedSongs</a><br>
             <script>
                 $('#likeBtn').click(function () {
                     $('#modal_trigger').click();
                 });
             </script>
             {% endif %}
-            <a class="left-panel-btn"><i class="fas fa-compact-disc"></i> Artists</a><br>
+            <a class="left-panel-btn"><i class="fas fa-headphones"></i> Artists</a><br>
             <a class="left-panel-btn"><i class="fas fa-book"></i> Playlist</a><br>
             <br>
 

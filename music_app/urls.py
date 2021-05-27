@@ -21,6 +21,7 @@ urlpatterns = [
     path('createPlaylist', views.createPlaylist, name='createPlaylist'),
     path('myPlaylist/<int:id>', views.myPlaylist, name='myPlaylist'),
     path('addSongToPlaylist', views.addSongToPlaylist, name='addSongToPlaylist'),
+    path('deletePlaylist', views.deletePlaylist, name='deletePlaylist'),
     path('searchResults', views.searchResults, name='searchResults'),
     url(r'^media/(?P<path>.*)$', serve,{'document_root': settings.MEDIA_ROOT}), 
     url(r'^static/(?P<path>.*)$', serve,{'document_root': settings.STATIC_ROOT}),

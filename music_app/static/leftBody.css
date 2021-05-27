@@ -29,8 +29,9 @@
 .left-panel-playlist-btn {
     /* font-family: 'Baloo Bhai 2', cursive; */
     font-family: 'Lato', sans-serif;
-    /* margin: 5px; */
-    padding: 2px 8px;
+    /* width: 80px; */
+    margin: 5px 0px;
+    padding: 5px 10px;
     font-size: 1rem;
     line-height: 1.8;
     word-spacing: 0.3rem;

@@ -100,6 +100,14 @@
         
         {% endif %}
 
+
+        <div>
+            <form action="/deletePlaylist" method="POST">{% csrf_token %}
+                <input type="hidden" name="playlist_id" value="{{playlistInfo.playlist_id}}">
+                <button id="delete-btn" type="submit">Delete Playlist</button>
+            </form>
+        </div>
+
         <div id="footer"></div>
 
     </div>
