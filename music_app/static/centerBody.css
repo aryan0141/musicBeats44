@@ -1,0 +1,163 @@
+
+#body-center {
+    height: 550px;
+    padding: 20px;
+    margin-left: 240px;
+    padding-right: 40px;
+    overflow: auto;
+}
+
+.song-card {
+    margin: 0px 10px;
+    height: 200px;
+    width: 150px;
+}
+
+.song-card img {
+    border-radius: 3%;
+    margin: auto;
+    height: 150px;
+    width: 150px;
+}
+
+/* h2 {
+    margin-left: 35px;
+} */
+
+
+
+.containera {
+    border-radius: 4%;
+    position: relative;
+    margin-top: 50px;
+    width: 145px;
+    height: 145px;
+}
+
+.overlaya {
+    position: absolute;
+    border-radius: 4%;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0);
+    transition: background 0.5s ease;
+}
+
+.containera:hover .overlaya {
+    display: block;
+    background: rgba(0, 0, 0, .65);
+}
+
+.containera img {
+    border-radius: 4%;
+    position: absolute;
+    width: 145px;
+    height: 145px;
+    left: 0;
+}
+
+.play-btn {
+    position: absolute;
+    width: 145px;
+    left: 0;
+    top: 52px;
+    text-align: center;
+    opacity: 0;
+    transition: opacity .35s ease;
+}
+.play-btn a {
+    color: white;
+    font-size: 3rem;
+    z-index: 1;
+}
+.containera:hover .play-btn {
+    opacity: 1;
+}
+.play-btn a:hover {
+    transition: 0.2s;
+    /* color: rgb(224, 224, 224); */
+    opacity: 0.6;
+    /* font-size: 3.4rem; */
+    /* transform: scale(1.05); */
+}
+
+.play-btn-spotify-songs {
+    position: absolute;
+    width: 145px;
+    left: 0;
+    top: 52px;
+    text-align: center;
+    opacity: 0;
+    transition: opacity .35s ease;
+    color: white;
+    font-size: 3rem;
+    z-index: 1;
+}
+.containera:hover .play-btn-spotify-songs {
+    opacity: 1;
+}
+.play-btn-spotify-songs:hover {
+    transition: 0.2s;
+    /* color: rgb(224, 224, 224); */
+    opacity: 0.6;
+    /* font-size: 3.4rem; */
+    /* transform: scale(1.05); */
+}
+
+.add-playlist-btn {
+    position: absolute;
+    width: 245px;
+    left: 0;
+    top: 116px;
+    text-align: center;
+    opacity: 0;
+    transition: opacity .35s ease;
+}
+.add-playlist-btn a{
+    color: white;
+    font-size: 1.3rem;
+    z-index: 1;
+    cursor: pointer;
+}
+.containera:hover .add-playlist-btn {
+    opacity: 1;
+}
+.add-playlist-btn a:hover {
+    transition: 0.2s;
+    /* color: rgb(224, 224, 224); */
+    opacity: 0.6;
+    /* font-size: 3.4rem; */
+    /* transform: scale(1.05); */
+}
+
+
+
+
+
+
+.song-card2 {
+    margin: 0px 10px;
+    height: 180px;
+    width: 145px;
+    display: none;
+}
+
+.song-card2 img {
+    border-radius: 4%;
+    margin: auto;
+    height: 145px;
+    width: 145px;
+}
+
+.song-card2 p {
+    font-family: 'Baloo Bhai 2', cursive;
+    font-size: 0.9rem;
+    line-height: 2.1;
+    color: rgb(71, 70, 70);
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    text-align: center;
+}

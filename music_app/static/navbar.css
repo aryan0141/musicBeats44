@@ -1,0 +1,52 @@
+/* ---------------------------------------------------------Main Navbar--------------------------------------------------------------- */
+#navbar {
+    width: 100%;
+    padding: 10px;
+    display: grid;
+    grid-template-columns: 30% 40% 30%;
+    overflow: hidden;
+    /* border-bottom: 1px solid rgba(255, 255, 255, 0.5); */
+    box-shadow: 0 2px 4px 0 rgba(0, 0, 0, 0.05), 0 1px 10px 0 rgba(0, 0, 0, 0.05);
+}
+
+#nav-right {
+    display: flex;
+}
+
+/* #nav-center {
+    display: flex;
+} */
+
+#nav-left {
+    display: flex;
+}
+
+#navbar a {
+    text-decoration: none;
+    padding: 10px;
+    /* font-family: 'Baloo Bhai 2', cursive; */
+    font-family: 'Lato', sans-serif;
+    cursor: pointer;
+    font-size: 1.1rem;
+    color: rgb(68, 68, 68);
+}
+
+#navbar a:hover {
+    color: #2bc5b4;
+}
+
+.searchText {
+    width: 550px;
+    height: 2.3rem;
+    border-radius: 7px;
+    margin: 5px auto 0px auto;
+    text-align: center;
+    color: rgb(130, 131, 131);
+    /* color: yellow; */
+    border: 1px solid rgb(211, 211, 211);
+    font-family: 'Baloo Bhai 2', cursive;
+}
+
+#navbar input:focus {
+    outline: none;
+}

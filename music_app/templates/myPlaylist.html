@@ -1,0 +1,144 @@
+{%extends 'header.html'%}
+{% block body %}
+{% load static %}
+
+<link rel="stylesheet" href="{% static 'myPlaylist.css' %}">
+
+<body>
+    <div id="body-center">
+        <div class="card">
+            <img id="randomPlaylistImage" alt="No Image Found" />
+            <script>
+                // var img_path = '{{randomImagePath}}';
+                var path = '{% static randomImagePath %}';
+                // alert(path);
+                document.getElementById("randomPlaylistImage").src = '{% static randomImagePath %}';
+            </script>
+            <div class="cardData">
+                <h1 style="font-family: Lato,sans-serif; font-weight: 500; font-size: 2.25rem; line-height: 1.8; word-spacing: 1px; color: rgb(29, 29, 29);"
+                    id="B_{{playlistInfo.playlist_id}}">{{playlistInfo.playlist_name}}</h1>
+
+                <p
+                    style="margin: 0px 10px 10px 0px; font-size: 1rem; font-family: 'Roboto', sans-serif; color: rgb(172, 169, 169);">
+                    {{playlistInfo.plays}} Songs</p>
+
+                <p
+                    style="margin: 0px 10px 10px 0px; font-size: 1rem; font-family: 'Roboto', sans-serif; color: rgb(172, 169, 169);">
+                    {{playlistInfo.likes}} Likes</p>
+                <p
+                    style="margin: 0px 10px 10px 0px; font-size: 1rem; font-family: 'Roboto', sans-serif; color: rgb(172, 169, 169);">
+                    {{playlistInfo.followers}} Followers</p>
+                <!-- <div> -->
+                <br>
+                <a href="/allSongs" id="add_song_btn"><i class="fas fa-plus"></i>
+                    Add Song</a>
+                <!-- </div> -->
+            </div>
+        </div>
+
+
+        {% if playlistSongs %}
+        <h2 style="margin-left: 5px; margin-top: 10px; font-size: 1.35rem; font-family: sans-serif; color: rgb(65, 63, 63); ">
+            Your Songs</h2>
+        <div id="playlist">
+            {% for i in playlistSongs %}
+            <div class="sameMovieCard" id="Div_{{i.song_id}}">
+                <div class="container_songpost">
+                    <img src="{{i.image.url}}" id="A_{{i.song_id}}" />
+                    <div class="overlay_songpost"></div>
+                    <div class="play-btn_songpost">
+                        <li><a href="{{i.song.url}}" id="{{i.song_id}}"><i class="far fa-play-circle fa-2x"></i></a>
+                        </li>
+                    </div>
+                </div>
+                <div class="songpost_data">
+                    <h5 class="song-name" id="B_{{i.song_id}}">
+                        {{i.name}}</h5>
+                    <p class="singer-name">{{i.singer1}}</p>
+                    <p class="movie-name" id="C_{{i.song_id}}">
+                        {{i.movie}}</p>
+                    <p class="remove-song-from-playlist-btn" id="F_{{i.song_id}}" onclick="removeSongFromPlaylist(this)" title="Remove from Playlist"><i class="far fa-times-circle"></i></p>
+                </div>
+            </div>
+            {% endfor %}
+
+        </div>
+        {% else %}
+        <h2 style="margin-bottom: -30px; margin-left: 5px; margin-top: 100px; font-size: 1.35rem; font-family: sans-serif; color: rgb(65, 63, 63); ">
+            Currently No Songs Added in Your Playlist</h2>
+        {% endif %}
+
+
+        <h2 style="margin-bottom: -30px; margin-left: 5px; margin-top: 100px; font-size: 1.35rem; font-family: sans-serif; color: rgb(65, 63, 63); ">
+            Recommended Artists</h2>
+
+        {% if recommendedSingers %}
+        <div class="main-carousel" data-flickity='{"groupCells":3 , "contain": true, "draggable": false, "pageDots": false}'>
+            {% for i in recommendedSingers %}
+            <div class="carousel-cell">
+                <div class="song-card">
+                    <div class="containera">
+                        <img style="border-radius: 100%;" src="{{i.image.url}}" alt="" />
+                        <div style="border-radius: 100%;" class="overlaya"></div>
+                        <div class="play-btn"><a href="/album/{{i.singer_id}}"> <i class="fas fa-play-circle"></i>
+                            </a>
+                        </div>
+                    </div>
+                    <div>
+                        <p class="songName">{{i.name}}</p>
+                    </div>
+                </div>
+            </div>
+            {% endfor %}
+        </div>
+        {% else %}
+        <div style="margin: 40px auto;">
+
+            <p style="font-size: 1rem; font-family: 'Roboto', sans-serif; color: rgb(129, 126, 126);">
+                ADD SOME SONGS IN YOUR PLAYLIST TO GET RECOMMENDATIONS</p>
+            </div>
+        
+        {% endif %}
+
+        <div id="footer"></div>
+
+    </div>
+    
+
+
+    <div id="audio_main" class="audio-decs">
+        <div class="audio-data">
+            <img id="audio-img" style="height: 53px; width: 64%; border-radius: 4%; margin: 3px 0px 3px 30px;"
+                src="{% static 'staticDisk.jpg' %}" alt="Image here">
+            <div style="margin: auto 6px;">
+                <h4 id="audio-song">Song Name</h4>
+                <p id="audio-movie" style="color: rgb(151, 151, 151);">Album Name</p>
+            </div>
+        </div>
+        <div style="margin: auto 0px;">
+            <audio preload="none" controls id="audioPlayer">
+                <!-- <source type="audio/mp3" /> -->
+            </audio>
+        </div>
+    </div>
+
+
+    <!-- removeSongFromPlaylist -->
+    <script>
+        function removeSongFromPlaylist(el) {
+            var playlistId = "{{playlistInfo.playlist_id}}";
+            var song_id = el.id;
+            song_id = song_id.slice(2);
+            $("#Div_"+song_id).fadeOut('slow')
+            // alert("Song ID: "+song_id+" | Playlist ID: "+playlistId);
+            $.ajax({
+                "url": "/myPlaylist/"+playlistId,
+                "type": "post",
+                "data": { 'music_id' : song_id, 'csrfmiddlewaretoken': '{{ csrf_token }}'},
+                "success": showAlert('success', "Succesfully Removed"),
+                // "error": error_callback
+            })
+        }
+    </script>
+
+    {% endblock %}

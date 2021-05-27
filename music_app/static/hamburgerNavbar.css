@@ -1,0 +1,126 @@
+* {
+    margin: 0;
+    padding: 0;
+}
+
+body {
+    width: 100%;
+    height: 139px;
+    /* background-image: url('images/Header_grey.gif');    */
+    background-color: rgb(244, 244, 244);
+    overflow: hidden;
+}
+
+html {
+    scroll-behavior: smooth;
+}
+
+
+/* --------------------------------------------------------Hamburger Navbar---------------------------------------------------------- */
+#hambergerMenu {
+    display: none;
+}
+
+#menu {
+    width: 35px;
+    height: 30px;
+    margin: 20px 0 20px 20px;
+    visibility: hidden;
+    cursor: pointer;
+    color: black;
+}
+
+.bar {
+    height: 5px;
+    width: 100%;
+    display: block;
+    border-radius: 5px;
+    transition: 0.3s ease;
+
+}
+
+#bar1 {
+    transform: translateY(-4px);
+}
+
+#bar3 {
+    transform: translateY(4px);
+}
+
+.nav li a {
+    color: black;
+    padding: 5px;
+    text-decoration: none;
+    font-size: 1.2rem;
+    font-family: 'Quicksand', sans-serif;
+}
+
+.nav li a:hover {
+    font-weight: bold;
+}
+
+.nav li {
+    list-style: none;
+    padding: 16px 0;
+}
+
+.nav h1 {
+    font-size: 2.5rem;
+    padding: 5px;
+    font-family: 'Baloo Bhai 2', cursive;
+}
+
+.nav {
+    padding: 0;
+    margin: 0 20px;
+    transition: 0.3s ease;
+    display: none;
+}
+
+.menu-bg,
+#menu-bar {
+    top: 0;
+    left: 0;
+    position: absolute;
+}
+
+.menu-bg {
+    z-index: 1;
+    width: 0;
+    height: 0;
+    margin: 30px 0 20px 20px;
+    background: radial-gradient(circle, rgb(240, 237, 237), white);
+    border-radius: 50%;
+    transition: 0.2s ease;
+}
+
+#menu-bar {
+    z-index: 2;
+}
+
+.change-bg {
+    width: 650px;
+    height: 540px;
+    transform: translate(-60%, -30%);
+}
+
+.change .bar {
+    background-color: black;
+    transition: 0.9s ease;
+}
+
+.change #bar1 {
+    transform: translateY(4px) rotateZ(-45deg);
+}
+
+.change #bar3 {
+    transform: translateY(-6px) rotate(45deg);
+}
+
+.change #bar2 {
+    opacity: 0;
+}
+
+.change {
+    display: block;
+}

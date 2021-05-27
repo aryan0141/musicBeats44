@@ -1,0 +1,358 @@
+{%extends 'header.html'%}
+
+{% load static %}
+{% block body %}
+<style>
+    .songName {
+        font-family: 'Baloo Bhai 2', cursive;
+        font-size: 0.9rem;
+        line-height: 2;
+        color: rgb(71, 70, 70);
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        text-align: center;
+    }
+
+    .movieName {
+        font-family: 'Lato', sans-serif;
+        font-size: 0.8rem;
+        line-height: 0.8;
+        color: rgb(139, 138, 138);
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        text-align: center;
+    }
+
+    .center {
+        position: absolute;
+        top: 0;
+        bottom: 0;
+        left: 0;
+        right: 0;
+        margin: auto;
+    }
+
+    #playlist {
+        list-style: none;
+    }
+
+    #playlist li a {
+        color: rgb(179, 177, 177);
+        text-decoration: none;
+        transition: 0.2s;
+    }
+
+    #playlist li a:hover {
+        color: #2bc5b4;
+        transition: 0.2s;
+    }
+
+    #playlist .current-song a {
+        color: #2bc5b4;
+    }
+
+    #likeButton {
+        margin: 10px 10px 10px 30px;
+        color: rgb(151, 151, 151);
+        background: none;
+        border: none;
+        cursor: pointer;
+        transition: 0.4s;
+    }
+
+    #likeButton:focus {
+        outline: none;
+        transition: 0.4s;
+    }
+</style>
+
+
+<div id="body-center">
+
+    <!-- ------------Message Box------------ -->
+
+    <!-- ------------------------------------------- -->
+
+        <div id="recentlyPlayed" style="padding: 5px;">
+        {% if user.is_authenticated %}
+        {% if recentSongs %}
+        <h2
+            style="margin-bottom: -30px; margin-left: 8px; font-size: 1.35rem; font-family: sans-serif; color: rgb(65, 63, 63); ">
+            Recently Played</h2>
+        <div class="main-carousel"
+            data-flickity='{"groupCells":5 , "contain": true, "draggable": false, "pageDots": false, "cellAlign": "left"}'>
+            {% for i in recentSongs reversed %}
+            <div class="carousel-cell">
+                <div class="song-card">
+                    <div class="containera">
+                        <img src="{{i.image.url}}" alt="" />
+                        <div class="overlaya"></div>
+                        <div class="play-btn"><a href="song/{{i.song_id}}"> <i class="fas fa-play-circle"></i>
+                            </a>
+                        </div>
+                        {% if user.is_authenticated %}
+                        <div class="add-playlist-btn"><a id="W_{{i.song_id}}" title="Add to Playlist"
+                                onclick="showDiv(this)"> <i class="fas fa-ellipsis-h"></i>
+                            </a>
+                        </div>
+                        {% else %}
+                        <div class="add-playlist-btn"><a onclick="$('#modal_trigger').click();" title="Add to Playlist"> <i
+                                    class="fas fa-ellipsis-h"></i>
+                            </a>
+                        </div>
+                        {% endif %}
+                    </div>
+                    <div>
+                        <p class="songName">{{i.name}}</p>
+                    </div>
+                    <p class="movieName">{{i.singer1}}</p>
+                </div>
+            </div>
+            {% endfor %}
+        </div>
+        {% else %}
+        <!-- <div> -->
+        <!-- <h2
+                style="text-align: center; margin: 45px; font-size: 0.9rem; font-family: sans-serif; color: rgb(173, 173, 173); ">
+                Play a Song to Add it in your History.</h2> -->
+        <!-- </div> -->
+        {% endif %}
+        {% endif %}
+    </div>
+
+    <div id="songsFromVariousArtists" style="padding: 5px;">
+        <h2
+            style="margin-bottom: -30px; margin-left: 8px; font-size: 1.35rem; font-family: sans-serif; color: rgb(65, 63, 63); ">
+            Trending Songs</h2>
+        <div id="playlist">
+            <div class="main-carousel"
+                data-flickity='{"groupCells":5 , "contain": true, "pageDots": false, "draggable": false, "cellAlign": "left", "lazyLoad": true}'>
+                {% for i in songsFromVariousArtists %}
+                <div class="carousel-cell">
+                    <div class="song-card">
+                        <div class="containera">
+                            <img src="{{i.album.images.0.url}}" id="A_{{i.id}}" />
+                            <div class="overlaya"></div>
+                            <div>
+                                <li><a class="play-btn-spotify-songs" href="{{i.preview_url}}" id="{{i.id}}"><i
+                                            class="fas fa-play-circle"></i></a>
+                                </li>
+                            </div>
+                        </div>
+                        <div>
+                            <p class="songName" id="B_{{i.id}}">{{i.name}}</p>
+                        </div>
+                        <p class="movieName" id="C_{{i.id}}">{{i.album.name}}</p>
+                    </div>
+                </div>
+                {% endfor %}
+            </div>
+        </div>
+    </div>
+
+    <div id="newReleases" style="padding: 5px;">
+        <h2
+            style="margin-bottom: -30px; margin-left: 8px; font-size: 1.35rem; font-family: sans-serif; color: rgb(65, 63, 63); ">
+            New Realeases</h2>
+
+        <div class="main-carousel"
+            data-flickity='{"groupCells":5 , "contain": true, "pageDots": false, "draggable": false, "cellAlign": "left", "lazyLoad": true}'>
+            {% for i in newRealeases %}
+            <div class="carousel-cell">
+                <div class="song-card">
+                    <div class="containera">
+                        <img src="{{i.image.url}}" alt="" />
+                        <div class="overlaya"></div>
+                        <div class="play-btn"><a href="song/{{i.song_id}}" ;> <i class="fas fa-play-circle"></i>
+                            </a>
+                        </div>
+                        {% if user.is_authenticated %}
+                        <div class="add-playlist-btn"><a id="Z_{{i.song_id}}" onclick="showDiv(this)"
+                                title="Add to Playlist"> <i class="fas fa-ellipsis-h"></i>
+                            </a>
+                        </div>
+                        {% else %}
+                        <div class="add-playlist-btn"><a onclick="$('#modal_trigger').click();" title="Add to Playlist"> <i
+                                    class="fas fa-ellipsis-h"></i>
+                            </a>
+                        </div>
+                        {% endif %}
+                    </div>
+                    <div>
+                        <p class="songName">{{i.name}}</p>
+                    </div>
+                    <p class="movieName">{{i.singer1}}</p>
+                    <!-- <p>{{i.movie}}</p> -->
+                </div>
+            </div>
+            {% endfor %}
+        </div>
+    </div>
+
+
+    <div id="trendingNow" style="padding: 5px;">
+        <h2
+            style="margin-bottom: -30px; margin-left: 8px; font-size: 1.35rem; font-family: sans-serif; color: rgb(65, 63, 63); ">
+            Other Hits</h2>
+        <div class="main-carousel"
+            data-flickity='{"groupCells":5 , "contain": true, "pageDots": false, "draggable": false, "cellAlign": "left"}'>
+            {% for i in trendingSongs %}
+            <div class="carousel-cell">
+                <div class="song-card">
+                    <div class="containera">
+                        <img src="{{i.image.url}}" alt="" />
+                        <div class="overlaya"></div>
+                        <!-- <div class="play-btn"><a href="song/{{i.song_id}}"> <i class="far fa-play-circle fa-3x"></i> -->
+                        <div class="play-btn"><a href="song/{{i.song_id}}"> <i class="fas fa-play-circle"></i>
+                            </a>
+                        </div>
+                        {% if user.is_authenticated %}
+                        <div class="add-playlist-btn"><a id="Y_{{i.song_id}}" onclick="showDiv(this)"
+                                title="Add to Playlist"> <i class="fas fa-ellipsis-h"></i>
+                            </a>
+                        </div>
+                        {% else %}
+                        <div class="add-playlist-btn"><a onclick="$('#modal_trigger').click();" title="Add to Playlist"> <i
+                                    class="fas fa-ellipsis-h"></i>
+                            </a>
+                        </div>
+                        {% endif %}
+                    </div>
+                    <div>
+                        <p class="songName">{{i.name}}</p>
+                    </div>
+                    <p class="movieName">{{i.movie}}</p>
+                    <!-- <p>{{i.singer1}}</p> -->
+                </div>
+            </div>
+            {% endfor %}
+        </div>
+    </div>
+
+
+
+
+    <div id="topArtists" style="padding: 5px;">
+        <h2
+            style="margin-bottom: -30px; margin-left: 8px; margin-top: 100px; font-size: 1.35rem; font-family: sans-serif; color: rgb(65, 63, 63); ">
+            Top Artists</h2>
+        <div class="main-carousel"
+            data-flickity='{"groupCells":5 , "contain": true, "pageDots": false, "draggable": false, "cellAlign": "left"}'>
+            {% for i in singers %}
+            <div class="carousel-cell">
+                <div class="song-card">
+                    <div class="containera">
+                        <img style="border-radius: 100%;" src="{{i.image.url}}" alt="" />
+                        <div style="border-radius: 100%;" class="overlaya"></div>
+                        <div class="play-btn"><a href="album/{{i.singer_id}}"> <i class="fas fa-play-circle"></i>
+                            </a>
+                        </div>
+
+                    </div>
+                    <div>
+                        <p class="songName">{{i.name}}</p>
+                    </div>
+                </div>
+            </div>
+            {% endfor %}
+        </div>
+    </div>
+
+    <style>
+        #divId {
+            padding: 25px;
+            z-index: 11;
+            display: none;
+            /* color: aqua; */
+            background-color: white;
+            border-radius: 11px;
+        }
+    </style>
+
+    <div id="divId">
+        {% if myPlaylists %}
+        <p style="margin: 5px; font-size: 0.75rem; font-weight: 700; color: rgb(138, 138, 138); text-align: left;">
+            Add This Song To Your Playlist</p>
+        {% for playlist in myPlaylists %}
+        <a class="left-panel-btn" id="D_{{playlist.playlist_id}}"
+            onclick="sendPostRequestPlaylistSong(this)">{{playlist.playlist_name}}</a><br>
+        {% endfor %}
+        {% else %}
+        <p style="margin: 5px; font-size: 0.8rem; font-weight: 700; color: rgb(138, 138, 138); text-align: left;">
+            You don't have any Playlist.</p>
+        <a class="glow-on-hover"
+            onclick="$('#divId').css({display: 'none'}), document.getElementById('modal-wrapper-playlist').style.display='block'"><i
+                class="fas fa-plus"></i> Create Playlist</a>
+        {% endif %}
+    </div>
+
+    <div id="footer"></div>
+
+
+</div>
+
+<div id="audio_main" class="audio-decs">
+    <div class="audio-data">
+        <img id="audio-img" style="height: 53px; width: 64%; border-radius: 4%; margin: 3px 0px 3px 30px;"
+            src="{% static 'staticDisk.jpg' %}" alt="Image here">
+        <div style="margin: auto 6px;">
+            <h4 id="audio-song">Song Name</h4>
+            <p id="audio-movie">Album Name</p>
+        </div>
+    </div>
+    <div style="margin: auto 0px;">
+        <audio preload="auto" controls id="audioPlayer">
+            <!-- <source type="audio/mp3" /> -->
+        </audio>
+    </div>
+</div>
+
+
+
+
+<script>
+    var song_id_for_playlist;
+    function showDiv(el) {
+        // alert(el.id + " is Clicked!");
+        var div = $("#divId");
+        song_id_for_playlist = el.id;
+        div.css({
+            top: event.pageY,
+            left: event.pageX,
+            position: "absolute",
+            display: "block"
+        });
+
+    }
+    $(document).mouseup(function (e) {
+
+        var container = $("#divId");
+
+        if (!container.is(e.target) && container.has(e.target).length === 0) {
+
+            container.fadeOut();
+
+        }
+    });
+
+    function sendPostRequestPlaylistSong(el) {
+        // alert("Song ID: "+song_id_for_playlist+" | Playlist ID: "+el.id);
+        var data = song_id_for_playlist + "|" + el.id;
+        $.ajax({
+            "url": "addSongToPlaylist",
+            "type": "post",
+            "data": { 'data': data, 'csrfmiddlewaretoken': '{{ csrf_token }}' },
+            "success": showAlert('success', "Song Added In Your Playlist"),
+            // "error": error_callback
+        })
+        var div = $("#divId");
+        div.css({
+            transition: "0.3s",
+            display: "none"
+        });
+    }
+</script>
+
+{% endblock %}

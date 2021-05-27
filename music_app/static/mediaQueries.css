@@ -1,0 +1,89 @@
+ /*-------------------------------------------------Media Queries----------------------------------------------------------- */
+
+
+ @media only screen and (max-width: 600px) {
+
+    #menu {
+        visibility: visible;
+    }
+
+    #navbar {
+        display: none;
+    }
+
+    #hambergerMenu {
+        display: block;
+    }
+
+    #searchText {
+        width: 250px;
+        height: 2.1rem;
+        border-radius: 4px;
+        margin: 10px 75px;
+        align-content: center;
+        text-align: center;
+        color: rgb(130, 131, 131);
+        border: 1px solid rgb(211, 211, 211);
+        font-family: 'Baloo Bhai 2', cursive;
+    }
+
+    .bar {
+        background-color: white;
+        z-index: 1;
+    }
+
+
+    #body-left {
+        display: none;
+    }
+
+    #body-center {
+        height: 590px;
+        margin-left: 10px;
+        overflow: auto;
+    }
+
+    #footer-top {
+        display: grid;
+        padding: 20px 0px 0px 0px;
+        grid-template-columns: 50% 50%;
+    }
+
+    .footer-top-content {
+        padding: 20px 5px;
+        margin: 0px auto;
+    }
+
+    #footer-center {
+        padding: 35px 5px;
+    }
+
+    .audio-decs {
+        display: grid;
+        grid-template-columns: 100%;
+        position: fixed;
+        bottom: 0px;
+        right: 0px;
+        width: 100%;
+        padding: 10px 10px 10px 10px;
+        z-index: 1;
+        background-color: rgb(244, 244, 244);
+        box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.3), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+        /* border-top: 1px solid rgb(130, 131, 131); */
+    }
+
+    .audio-data {
+        display: grid;
+        /* padding-right: 31px; */
+        grid-template-columns: 30% 65%;
+    }
+
+    .modal-content {
+        background-color: white;
+        margin: 4% auto 15% auto;
+        width: 85%;
+        /* height: 600px; */
+        padding-bottom: 50px;
+        border-radius: 2%;
+    }
+}

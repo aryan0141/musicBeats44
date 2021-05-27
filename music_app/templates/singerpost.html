@@ -1,0 +1,72 @@
+{%extends 'header.html'%}
+{% block body %}
+{% load static %}
+<!-- <style> -->
+    <link rel="stylesheet" href="{% static 'singerpost.css' %}">
+<!-- </style> -->
+
+<div id="body-center">
+    <div id="playlist">
+        <div class="card">
+            <img src="{{singer.images.0.url}}" />
+            <div class="cardData">
+                <h1
+                    style="font-family: Lato,sans-serif; font-weight: 550; font-size: 2.35rem; line-height: 1.8; word-spacing: 1px; color: rgb(29, 29, 29);">
+                    {{singer.name}}
+                </h1>
+                <p style="margin: 0px 10px 10px 0px; font-size: 1rem; font-weight: 550; font-family: 'Roboto', sans-serif; color: rgb(136, 135, 135);">
+                    Type - {{singer.type}}</p>
+                <p style="margin: 0px 10px 10px 0px; font-size: 1rem; font-weight: 550; font-family: 'Roboto', sans-serif; color: rgb(136, 135, 135);">
+                    Followers - {{singer.followers.total}}</p>
+                <p style="margin: 0px 10px 10px 0px; font-size: 1rem; font-weight: 550; font-family: 'Roboto', sans-serif; color: rgb(136, 135, 135);">
+                    Genre - {{singer.genres.0}} | {{singer.genres.1}}</p>
+                <!-- <h5 style="margin-bottom: 10px;">2014 T-Series</h5> -->
+                <div>
+                </div>
+            </div>
+        </div>
+        {% for i in singerSongs %}
+        <div id="sameMovieCard">
+            <div class="container_songpost">
+                <img src="{{i.album.images.0.url}}" id="A_{{i.id}}" />
+                <div class="overlay_songpost"></div>
+                <div class="play-btn_songpost">
+                    <li><a href="{{i.preview_url}}" id="{{i.id}}"><i class="far fa-play-circle fa-2x"></i></a>
+                    </li>
+                </div>
+            </div>
+            <div class="songpost_data">
+                <h5 class="song-name" id="B_{{i.id}}">
+                    {{i.name}}</h5>
+                <!-- <p class="singer-name">{{i.singer1}}</p> -->
+                <p class="movie-name" id="C_{{i.id}}">
+                    {{i.album.name}}</p>
+            </div>
+        </div>
+        {% endfor %}
+    </div>
+    <div id="footer"></div>
+</div>
+
+
+<div id="audio_main" class="audio-decs">
+    <div class="audio-data">
+        <img id="audio-img" style="height: 53px; width: 64%; border-radius: 4%; margin: 3px 0px 3px 30px;"
+            src="{% static 'staticDisk.jpg' %}" alt="Image here">
+        <div style="margin: auto 6px;">
+            <h4 id="audio-song">Song Name</h4>
+            <p id="audio-movie" style="color: rgb(151, 151, 151);">Album Name</p>
+        </div>
+    </div>
+    <div style="margin: auto 0px;">
+        <audio preload="none" controls id="audioPlayer">
+            <!-- <source type="audio/mp3" /> -->
+        </audio>
+    </div>
+</div>
+
+
+
+
+
+{% endblock %}

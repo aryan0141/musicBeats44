@@ -1,0 +1,263 @@
+* {
+    margin: 0;
+    padding: 0;
+}
+
+body {
+    background-color: rgb(244, 244, 244);
+}
+
+html {
+    scroll-behavior: smooth;
+}
+
+#navbar {
+    display: flex;
+    overflow: hidden;
+    border-bottom: 1px solid rgb(130, 131, 131);
+}
+
+.nav-right {
+    margin-left: auto;
+    padding: 10px;
+    align-content: center;
+    text-align: center;
+}
+
+#navbar a {
+    text-decoration: none;
+    padding: 10px;
+    cursor: pointer;
+}
+
+#navbar input {
+    width: 550px;
+    height: 1.9rem;
+    border-radius: 9px;
+    text-align: center;
+    color: rgb(130, 131, 131);
+    border: 1px solid rgb(130, 131, 131);
+    font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
+}
+
+#nav-center {
+    margin: 10px auto;
+}
+
+#nav-center:hover {
+    border-color: blue
+}
+
+/* ----------------------------------------------------------Main Body CSS------------------------------------------------------------ */
+
+#main-body {
+    display: grid;
+    grid-template-columns: 7% 78% 15%;
+}
+
+#body-left {
+    /* background-color: blue; */
+    width: 100%;
+    height: 100%;
+    border-right: 1px solid rgb(130, 131, 131);
+}
+
+#body-center {
+    /* background-color: greenyellow; */
+    width: 100%;
+    height: 100%;
+}
+
+#body-right {
+    /* background-color: pink; */
+    width: 100%;
+    height: 100%;
+    border-left: 1px solid rgb(130, 131, 131);
+}
+
+.bolly-posters {
+    display: grid;
+    grid-template-columns: 33% 33% 34%;
+    padding: 10px 0px;
+}
+
+.image {
+    /* margin: 7px; */
+    border-radius: 9%;
+    margin: 0px auto;
+    height: 201px;
+}
+
+.songs {
+    display: grid;
+    grid-template-columns: 14% 14% 14% 14% 14% 14% 16%;
+    padding: 10px 10px;
+}
+
+.song-card {
+    padding: 10px;
+}
+
+.song-card img {
+    border-radius: 7%;
+    margin: 0px auto;
+    height: 125px;
+    width: 100%;
+}
+
+.song-card h4 {
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    text-align: center;
+    font-size: 0.8rem;
+}
+
+.song-card p {
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    text-align: center;
+    color: rgb(151, 151, 151);
+    font-size: 0.8rem;
+}
+
+h2 {
+    margin-left: 35px;
+}
+
+.audio-decs {
+    display: grid;
+    grid-template-columns: 6% 14% 80%;
+    position: fixed;
+    bottom: 0px;
+    right: 0px;
+    width: 100%;
+    z-index: 1;
+    background-color: rgb(244, 244, 244);
+    border-top: 1px solid rgb(130, 131, 131);
+}
+
+#audio {
+    width: 100%;
+}
+
+
+
+
+
+
+
+
+
+* {
+    margin: 0px;
+    padding: 0px;
+    font-family: Helvetica, Arial, sans-serif;
+}
+
+/* Full-width input fields */
+input[type=text],
+input[type=password],
+input[type=email] {
+    width: 90%;
+    padding: 12px 20px;
+    margin: 8px 26px;
+    display: inline-block;
+    border: 1px solid #ccc;
+    box-sizing: border-box;
+    font-size: 16px;
+    border-radius: 5px;
+}
+
+/* Set a style for all buttons */
+button {
+    background-color: #4CAF50;
+    color: white;
+    padding: 14px 20px;
+    margin: 8px 26px;
+    border: none;
+    cursor: pointer;
+    width: 90%;
+    font-size: 20px;
+}
+
+button:hover {
+    opacity: 0.8;
+}
+
+/* Center the image and position the close button */
+.imgcontainer {
+    text-align: center;
+    margin: 24px 0 12px 0;
+    position: relative;
+}
+
+.avatar {
+    width: 400px;
+    height: 200px;
+    border-radius: 7%;
+}
+
+/* The Modal (background) */
+.modal {
+    display: none;
+    position: fixed;
+    z-index: 1;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    overflow: auto;
+    background-color: rgba(0, 0, 0, 0.4);
+}
+
+/* Modal Content Box */
+.modal-content {
+    background-color: #fefefe;
+    margin: 4% auto 15% auto;
+    border: 1px solid #888;
+    width: 40%;
+    padding-bottom: 30px;
+}
+
+/* The Close Button (x) */
+.close {
+    position: absolute;
+    right: 25px;
+    top: 0;
+    color: #000;
+    font-size: 35px;
+    font-weight: bold;
+}
+
+.close:hover,
+.close:focus {
+    color: red;
+    cursor: pointer;
+}
+
+/* Add Zoom Animation */
+.animate {
+    animation: zoom 0.6s
+}
+
+@keyframes zoom {
+    from {
+        transform: scale(0)
+    }
+
+    to {
+        transform: scale(1)
+    }
+}
+
+.play-btn{
+    align-content: center;
+    justify-content: center;
+    margin:0px auto;
+    padding: 3px 15px;
+    border: 1 px solid rgb(130, 131, 131);
+    color: rgb(130, 131, 131);
+    background: none;
+}

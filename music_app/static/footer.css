@@ -1,0 +1,58 @@
+        /* ---------------------------------------------------Footer CSS------------------------------------------------------------------ */
+        footer {
+            margin-top: 0px;
+            background-color: rgb(244, 244, 244);
+            color: rgb(44, 43, 43);
+            /* padding: 100px;  */
+        }
+
+        #footer-top {
+            display: grid;
+            padding: 20px 0px 0px 0px;
+            grid-template-columns: 20% 20% 20% 20% 20%;
+        }
+
+        .footer-top-content {
+            padding: 30px;
+            margin: 0px auto;
+        }
+
+        #footer-center {
+            padding: 35px 65px;
+        }
+
+        #footer-bottom {
+            /* background-color: peru; */
+            /* Abhi kuch socha nhi */
+            background-color: rgb(238, 235, 235);
+            text-align: center;
+            width: 100%;
+            padding: 5px;
+        }
+
+        footer h3 {
+            line-height: 1.6;
+            font-size: 0.8rem;
+            color: rgb(112, 112, 112);
+        }
+
+        footer a {
+            text-decoration: none;
+            line-height: 1.4;
+            font-size: 0.85rem;
+            cursor: pointer;
+            color: rgb(153, 153, 153);
+        }
+
+        #footer-center p {
+            text-align: justify;
+            line-height: 1.6;
+            font-size: 0.9rem;
+            color: rgb(146, 143, 143);
+        }
+
+        footer a:hover {
+            color: rgb(88, 87, 87);
+        }
+
+        /* ------------------------------------------------Footer CSS Ends--------------------------------------------------------- */

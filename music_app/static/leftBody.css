@@ -1,0 +1,120 @@
+
+#body-left {
+    width: 150px;
+    height: 700px;
+    background-repeat: repeat-y;
+    overflow: hidden;
+    position: absolute;
+    /* font-size: 16px; */
+    /* text-align: center; */
+    padding: 40px 0px 30px 50px;
+}
+
+.left-panel-btn {
+    /* font-family: 'Baloo Bhai 2', cursive; */
+    font-family: 'Lato', sans-serif;
+    margin: 5px;
+    font-size: 1rem;
+    line-height: 2.1;
+    word-spacing: 0.3rem;
+    color: rgb(77, 75, 75);
+    text-decoration: none;
+    text-align: left;
+    cursor: pointer;
+}
+
+.left-panel-btn:hover {
+    color: #2bc5b4;
+}
+.left-panel-playlist-btn {
+    /* font-family: 'Baloo Bhai 2', cursive; */
+    font-family: 'Lato', sans-serif;
+    /* margin: 5px; */
+    padding: 2px 8px;
+    font-size: 1rem;
+    line-height: 1.8;
+    word-spacing: 0.3rem;
+    color: rgb(77, 75, 75);
+    text-decoration: none;
+    text-align: left;
+    cursor: pointer;
+    border-radius: 7px;
+    transition: 0.2s;
+}
+
+.left-panel-playlist-btn:hover {
+    /* color: #2bc5b4; */
+    color: white;
+    transition: 0.2s;
+    background-color: rgb(53, 49, 49);
+}
+
+.glow-on-hover {
+    display: inline-block;
+    text-decoration: none;
+    vertical-align: middle;
+    font-family: 'Baloo Bhai 2', cursive;
+    padding: 6px 27px;
+    font-size: .93333rem;
+    line-height: 1.4; 
+
+    padding: 10px 15px 10px 15px;
+    /* width: 90px; */
+    /* height: 40px; */
+    border: 1px solid #2bc5b4;
+    outline: none;
+    color: #2bc5b4;
+    background: rgb(244, 244, 244);
+    cursor: pointer;
+    position: relative;
+    z-index: 0;
+    border-radius: 21px;
+}
+
+.glow-on-hover:before {
+    content: '';
+    background: linear-gradient(45deg, #4cdac2, #00ffd5, #079c8b, #8feede);
+    position: absolute;
+    top: -2px;
+    left:-2px;
+    background-size: 400%;
+    z-index: -1;
+    filter: blur(2px);
+    width: calc(100% + 4px);
+    height: calc(100% + 4px);
+    animation: glowing 20s linear infinite;
+    opacity: 0;
+    transition: opacity .4s ease-in-out;
+    border-radius: 21px;
+}
+
+.glow-on-hover:active {
+    /* color: #000 */
+    color: rgb(244, 244, 244);
+}
+
+.glow-on-hover:active:after {
+    background: transparent;
+}
+
+.glow-on-hover:hover:before {
+    opacity: 1;
+}
+
+.glow-on-hover:after {
+    z-index: -1;
+    content: '';
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    background: rgb(244, 244, 244);
+    left: 0;
+    top: 0;
+    border-radius: 21px;
+}
+
+@keyframes glowing {
+    0% { background-position: 0 0; }
+    50% { background-position: 400% 0; }
+    100% { background-position: 0 0; }
+}

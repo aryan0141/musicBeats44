@@ -1,0 +1,287 @@
+{%extends 'header.html'%}
+{% block body %}
+{% load static %}
+<style>
+    /* ----------------------------------------------------------Main Body CSS------------------------------------------------------------ */
+    #body-center {
+        height: 550px;
+        padding: 20px;
+        margin-left: 240px;
+        padding-right: 40px;
+        overflow: auto;
+    }
+
+    #sameMovieCard {
+        margin: 5px 150px 5px 20px;
+        display: grid;
+        grid-template-columns: 10% 90%;
+        padding: 10px 5px;
+        transition: 0.3s;
+    }
+
+    #sameMovieCard:hover {
+        box-shadow: 0 2px 2px 0 rgba(0, 0, 0, 0), 0 2px 2px 0 rgba(0, 0, 0, 0.1);
+        background-color: rgb(255, 255, 255);
+        transition: 0.3s;
+    }
+
+    .headings {
+        margin: 30px 10px 10px 65px;
+        font-size: 1rem;
+        font-family: 'Roboto', sans-serif;
+        color: rgb(43, 43, 43);
+    }
+
+    .center {
+        position: absolute;
+        top: 0;
+        bottom: 0;
+        left: 0;
+        right: 0;
+        margin: auto;
+    }
+
+    #playlist {
+        list-style: none;
+    }
+
+    #playlist li a {
+        color: rgb(179, 177, 177);
+        text-decoration: none;
+        transition: 0.2s;
+    }
+
+    #playlist li a:hover {
+        color: #2bc5b4;
+        transition: 0.2s;
+    }
+
+    #playlist .current-song a {
+        color: #2bc5b4;
+    }
+
+    #likeButton {
+        margin: 10px 10px 10px 30px;
+        color: rgb(151, 151, 151);
+        background: none;
+        border: none;
+        cursor: pointer;
+        transition: 0.4s;
+    }
+
+    #likeButton:focus {
+        outline: none;
+        transition: 0.4s;
+    }
+
+
+    .container_songpost {
+        border-radius: 4%;
+        position: relative;
+        margin: 1px 0px 1px 45px;
+        width: 75%;
+        height: 50px;
+    }
+
+    .overlay_songpost {
+        position: absolute;
+        border-radius: 4%;
+        top: 0;
+        left: 0;
+        width: 70%;
+        height: 50px;
+        background: rgba(0, 0, 0, 0);
+        transition: background 0.5s ease;
+    }
+
+    #sameMovieCard:hover .overlay_songpost {
+        display: block;
+        background: rgba(0, 0, 0, .65);
+    }
+
+    .container_songpost img {
+        border-radius: 4%;
+        position: absolute;
+        width: 70%;
+        margin: auto;
+        height: 50px;
+        left: 0;
+    }
+
+    .play-btn_songpost {
+        position: absolute;
+        width: 55px;
+        left: 0;
+        top: 10px;
+        text-align: center;
+        opacity: 0;
+        transition: opacity .2s ease;
+    }
+
+    .play-btn_songpost {
+        width: 42px;
+        top: 8px;
+    }
+
+    .songpost_data {
+        display: grid;
+        grid-template-columns: 33% 33% 34%;
+    }
+
+    .singer-name {
+        margin: auto 30px;
+        color: rgb(143, 142, 142);
+        font-size: 0.8rem;
+    }
+
+    .song-name {
+        margin: auto 5px;
+        color: rgb(75, 74, 74);
+        font-size: 0.85rem;
+    }
+
+    .movie-name {
+        margin: auto;
+        color: rgb(143, 142, 142);
+        font-size: 0.8rem;
+    }
+
+    #sameMovieCard:hover .play-btn_songpost {
+        opacity: 1;
+    }
+
+    .songName {
+        font-family: 'Baloo Bhai 2', cursive;
+        font-size: 0.9rem;
+        line-height: 2;
+        color: rgb(71, 70, 70);
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        text-align: center;
+    }
+
+
+    @media only screen and (max-width: 600px) {
+        #body-center {
+            height: 550px;
+            padding: 10px;
+            margin-left: 0px;
+            /* padding-right: 40px; */
+            overflow: auto;
+        }
+
+        #sameMovieCard {
+
+            margin: 5px 5px 5px 15px;
+            display: grid;
+            width: 90%;
+            grid-template-columns: 20% 80%;
+            padding: 10px 5px;
+            transition: 0.3s;
+        }
+
+        .headings {
+            margin: 5px 10px 10px 25px;
+            font-size: 1rem;
+            font-family: 'Roboto', sans-serif;
+            color: rgb(43, 43, 43);
+        }
+
+        .cardData {
+            padding: 0px 20px;
+            text-align: center;
+        }
+
+        .container_songpost {
+            border-radius: 4%;
+            position: relative;
+            margin: 5px auto;
+            width: 90%;
+            height: 50px;
+        }
+
+        .songpost_data {
+            display: grid;
+            grid-template-columns: 100%;
+        }
+
+        .play-btn_songpost {
+            width: 42px;
+            top: 8px;
+        }
+
+        .singer-name {
+            margin: 5px;
+        }
+
+        .song-name {
+            margin: 5px;
+            color: rgb(75, 74, 74);
+            font-size: 0.85rem;
+        }
+
+        .movie-name {
+            visibility: hidden;
+        }
+    }
+</style>
+
+
+<body>
+    <div id="body-center">
+        <p class="headings">Your Liked Songs</p>
+        <!-- <p style="margin: 0px 10px 10px 65px; font-size: 1rem; font-family: 'Roboto', sans-serif; color: rgb(43, 43, 43);"
+            id="C_{{song.song_id}}">Your Liked Songs</p> -->
+        <div id="playlist">
+            {% for i in likedSongs reversed %}
+            <div id="sameMovieCard">
+                <div class="container_songpost">
+                    <img src="{{i.image.url}}" id="A_{{i.song_id}}" />
+                    <div class="overlay_songpost"></div>
+                    <div class="play-btn_songpost">
+                        <li><a href="{{i.song.url}}" id="{{i.song_id}}"><i class="far fa-play-circle fa-2x"></i></a>
+                        </li>
+                    </div>
+                </div>
+                <div class="songpost_data">
+                    <h5 class="song-name" id="B_{{i.song_id}}">
+                        {{i.name}}</h5>
+                    <p class="singer-name">{{i.singer1}}</p>
+                    <p class="movie-name" id="C_{{i.song_id}}">
+                        {{i.movie}}</p>
+                </div>
+            </div>
+            {% endfor %}
+
+        </div>
+
+
+
+
+
+
+        <div id="footer"></div>
+    </div>
+
+    <!-- ------------------------------------------------------------------------------------------------------------------------------------------ -->
+
+
+    <div id="audio_main" class="audio-decs">
+        <div class="audio-data">
+            <img id="audio-img" style="height: 53px; width: 64%; border-radius: 4%; margin: 3px 0px 3px 30px;"
+                src="{% static 'staticDisk.jpg' %}" alt="Image here">
+            <div style="margin: auto 6px;">
+                <h4 id="audio-song">Song Name</h4>
+                <p id="audio-movie" style="color: rgb(151, 151, 151);">Album Name</p>
+            </div>
+        </div>
+        <div style="margin: auto 0px;">
+            <audio preload="none" controls id="audioPlayer">
+                <!-- <source type="audio/mp3" /> -->
+            </audio>
+        </div>
+    </div>
+
+
+    {% endblock %}
