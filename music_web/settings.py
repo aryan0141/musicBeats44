@@ -27,7 +27,7 @@ SECRET_KEY = 'i5k=wt-bz0^$=vz&unfle6hqxr7^%^=qi_dw&^2^om#retym&w'
 DEBUG = False
 
 # ALLOWED_HOSTS = ['hittunes.herokuapp.com', 'localhost']
-ALLOWED_HOSTS = ['musicbeats44.herokuapp.com', 'localhost']
+ALLOWED_HOSTS = ['localhost']
 # ALLOWED_HOSTS = []
 
 
@@ -43,7 +43,7 @@ AUTHENTICATION_BACKENDS = [
 # Application definition
 
 INSTALLED_APPS = [
-    'whitenoise.runserver_nostatic',
+    # 'whitenoise.runserver_nostatic',
     # 'django.contrib.staticfiles',
     'django.contrib.admin',
     'django.contrib.auth',
@@ -67,7 +67,7 @@ LOGIN_REDIRECT_URL = "/"
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
-    'whitenoise.middleware.WhiteNoiseMiddleware',
+    # 'whitenoise.middleware.WhiteNoiseMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.common.CommonMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
